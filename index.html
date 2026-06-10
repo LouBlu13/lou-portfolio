@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Title + description are also kept in content.js (main.js syncs them) -->
+    <title>Lou Blumenthal — Interaction Designer</title>
+    <meta
+      name="description"
+      content="Portfolio of Lou Blumenthal, an interaction designer based in Zürich, Switzerland — work, about, and contact."
+    />
+    <meta name="author" content="Lou Blumenthal" />
+
+    <!-- Inter font (Regular 400 + Black 900) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         #viewport — holds the four full-screen pages.
+         The page STRUCTURE lives here; the CONTENT is injected by main.js
+         from content.js (so a CMS can later supply the same data).
+         Elements left empty below (e.g. .nav, .work-grid, .footer) are
+         content slots; decorative pieces (circles, "+" marks) stay static.
+    ════════════════════════════════════════════════════════════════════ -->
+    <div id="viewport">
+
+
+      <!-- ── PAGE 1 · LANDING (bg #1a1517) ── -->
+      <section class="page landing active" id="landing">
+        <div class="stage stage-landing">
+          <h1 class="landing-title"><!-- content.js: landing.title --></h1>
+          <div class="landing-divider"></div>
+          <div class="landing-circles"><!-- content.js: landing.circles --></div>
+        </div>
+      </section>
+
+
+      <!-- ── PAGE 2 · WORK (bg #380009) ── -->
+      <section class="page work" id="work">
+        <nav class="nav"><!-- content.js: nav --></nav>
+        <div class="stage">
+          <div class="work-head"><!-- content.js: work.eyebrow --></div>
+          <div class="work-grid"><!-- content.js: work.projects (cards) --></div>
+          <!-- decorative portrait circles (photo set from content.js) -->
+          <div class="work-circles">
+            <span class="pic"></span>
+            <span class="solid"></span>
+          </div>
+        </div>
+        <footer class="footer"><!-- content.js: footer --></footer>
+      </section>
+
+
+      <!-- ── PAGE 3 · ABOUT (bg #010080) ── -->
+      <section class="page about" id="about">
+        <nav class="nav"><!-- content.js: nav --></nav>
+        <div class="stage">
+
+          <!-- LEFT · résumé (label + auto-scrolling entries) -->
+          <div class="resume-panel">
+            <div class="resume-label"><!-- content.js: about.resumeLabel --></div>
+            <div class="timeline">
+              <div class="timeline-list"><!-- content.js: about.resume --></div>
+            </div>
+          </div>
+
+          <!-- CENTER · overlapping circles (photo set from content.js) -->
+          <span class="about-circle-solid"></span>
+          <span class="about-circle-pic pic"></span>
+
+          <!-- RIGHT · greeting + bio (text from content.js) -->
+          <p class="about-hello"></p>
+          <p class="about-name"></p>
+          <span class="plus about-plus-1"></span>
+          <p class="about-bio-1"></p>
+          <span class="plus about-plus-2"></span>
+          <p class="about-bio-2"></p>
+
+        </div>
+        <footer class="footer"><!-- content.js: footer --></footer>
+      </section>
+
+
+      <!-- ── PAGE 4 · CONTACT (bg #0b3e31) ── -->
+      <section class="page contact" id="contact">
+        <nav class="nav"><!-- content.js: nav --></nav>
+        <div class="stage">
+          <!-- overlapping circles (photo set from content.js) -->
+          <span class="contact-pic pic"></span>
+          <span class="contact-solid"></span>
+
+          <h2 class="contact-heading"><!-- content.js: contact.heading --></h2>
+          <div class="contact-details"><!-- content.js: contact.details --></div>
+
+          <span class="plus contact-plus"></span>
+        </div>
+        <footer class="footer"><!-- content.js: footer --></footer>
+      </section>
+
+
+    </div><!-- /#viewport -->
+
+    <!-- content.js first (data), then main.js (renders it + behaviour) -->
+    <script src="content.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
