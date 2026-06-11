@@ -334,11 +334,13 @@ function scalePopup() {
   const overlay = document.getElementById("project-overlay");
   if (!overlay.classList.contains("open")) return;
   const DESIGN_W = 1199;
-  const scroll = overlay.querySelector(".po-scroll");
+  // Size the panel relative to the screen (about 82% of the width), but never
+  // larger than the design's own size, so it can't balloon on big screens.
+  const targetW = Math.min(window.innerWidth * 0.82, DESIGN_W);
+  const scale = targetW / DESIGN_W; // <= 1; scales down on smaller screens
+  overlay.style.setProperty("--po-scale", scale);
   const wrap = overlay.querySelector(".po-stage-wrap");
   const stage = overlay.querySelector(".po-stage");
-  const scale = Math.min(scroll.clientWidth / DESIGN_W, 1.3);
-  overlay.style.setProperty("--po-scale", scale);
   wrap.style.width = DESIGN_W * scale + "px";
   wrap.style.height = stage.offsetHeight * scale + "px"; // offsetHeight is the unscaled height
 }

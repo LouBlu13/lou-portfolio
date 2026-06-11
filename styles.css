@@ -845,26 +845,28 @@ body {
   outline-offset: 4px;
 }
 
-/* Clicking the exposed page around the sheet closes it (no dimming, so the
-   Work page stays visible around the edges like in the design). */
+/* Dim the page behind; clicking it closes the panel. */
 .po-backdrop {
   position: absolute;
   inset: 0;
+  background: rgba(0, 0, 0, 0.55);
 }
 
-/* The sheet: dark panel, red border, rounded top, inset from the screen edges. */
+/* The sheet: a centered dark panel sized relative to the screen (its width is
+   1199px * the scale set by scalePopup, so it never grows past the design size)
+   and capped in height, scrolling inside. */
 .po-sheet {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 8vh;
-  bottom: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(1199px * var(--po-scale) + 4px);
+  max-height: 86vh;
   display: flex;
   flex-direction: column;
   background: #380009;
   border: 2px solid #9b1212;
-  border-bottom: 0;
-  border-radius: 20px 20px 0 0;
+  border-radius: 20px;
   overflow: hidden;
 }
 
@@ -908,6 +910,7 @@ body {
 /* The scroll area and the scaled design stage inside it. */
 .po-scroll {
   flex: 1 1 auto;
+  min-height: 0; /* let the scroll area shrink inside the flex column */
   overflow-y: auto;
   overflow-x: hidden;
 }
