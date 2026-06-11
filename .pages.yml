@@ -84,14 +84,25 @@ content:
               # The fields below appear in the detail panel that opens when a
               # visitor clicks the project card.
               - { name: intro, label: Intro text, type: text }
-              - { name: gallery, label: Gallery images, type: image, list: true }
-              - name: process
-                label: Process steps (text + image)
+              # Content blocks: each is an image plus text. A block WITH a
+              # heading becomes an alternating image/text row; leave the heading
+              # empty to make it a full-width image with a centered caption.
+              - name: blocks
+                label: Content blocks
                 type: object
                 list: true
                 fields:
+                  - { name: heading, label: Heading (leave empty for full-width), type: string }
                   - { name: text, label: Text, type: text }
                   - { name: image, label: Image, type: image }
+              # The labelled image grid at the bottom of the detail panel.
+              - name: gallery
+                label: Gallery grid (bottom)
+                type: object
+                list: true
+                fields:
+                  - { name: image, label: Image, type: image }
+                  - { name: caption, label: Caption, type: string }
 
       # The about page: greeting, name, bio paragraphs, photo, and the résumé.
       - name: about

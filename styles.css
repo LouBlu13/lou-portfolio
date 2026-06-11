@@ -824,26 +824,29 @@ body {
 
 /* ==== Project detail panel (opens from the Work page) ==== */
 
-/* Everything below is placeholder styling — colours, spacing, and sizes are
-   deliberately plain so you can restyle the panel later. The behaviour (open
-   on card click, scroll, close) does not depend on these looks. */
+/* Colours live in these variables so the whole panel is easy to re-theme.
+   They use the Work page's red/coral palette on a light background, to match
+   the design. The behaviour (open on click, scroll, close) does not depend on
+   these looks, so restyle freely. */
+#project-overlay {
+  --po-bg: #ffffff;
+  --po-heading: #cd1b17;
+  --po-text: #d2503a;
+  --po-mark: #cd1b17;
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none; /* hidden until main.js adds .open */
+}
+#project-overlay.open {
+  display: block;
+}
 
 /* Make a Work card show a focus ring when tabbed to (it is now a button). */
 .work-card:focus-visible {
   outline: 2px solid var(--light);
   outline-offset: 4px;
-}
-
-/* The overlay layer. Covers the whole screen; hidden until main.js adds .open.
-   It sits above the pages (z-index 100) and is independent of the scaled stage. */
-#project-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: none;
-}
-#project-overlay.open {
-  display: block;
 }
 
 /* The dimmed area behind the panel; clicking it closes the panel. */
@@ -853,65 +856,179 @@ body {
   background: rgba(0, 0, 0, 0.7);
 }
 
-/* The panel itself: centred, capped width, and scrolls on its own if the
-   content is taller than the screen. */
+/* The panel: centred, capped width, scrolls on its own when taller than the screen. */
 .po-panel {
   position: absolute;
-  top: 5vh;
+  top: 4vh;
   left: 50%;
   transform: translateX(-50%);
-  width: min(900px, 90vw);
-  max-height: 90vh;
+  width: min(960px, 92vw);
+  max-height: 92vh;
   overflow-y: auto;
-  background: #1a1517;
-  color: #fff;
-  padding: 48px;
-  border-radius: 8px;
+  background: var(--po-bg);
+  color: var(--po-text);
+  padding: 64px;
+  border-radius: 10px;
 }
 
-/* The close (×) button, kept in view at the top-right while you scroll. */
+/* The close (×) button, kept in the top-right corner while you scroll. */
 .po-close {
   position: sticky;
   top: 0;
   display: block;
   margin-left: auto;
-  width: 40px;
-  height: 40px;
-  font-size: 28px;
+  width: 44px;
+  height: 44px;
+  font-size: 30px;
   line-height: 1;
-  color: #fff;
-  background: transparent;
+  color: var(--po-heading);
+  background: var(--po-bg);
   border: none;
   cursor: pointer;
 }
 
-/* Content blocks inside the panel. */
+/* Big project title. */
 .po-title {
-  font-size: 32px;
+  font-size: 48px;
+  font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+  color: var(--po-heading);
+  margin-bottom: 40px;
 }
+
+/* Short intro paragraph under the title. */
 .po-intro {
   font-size: 18px;
   line-height: 1.5;
-  margin-bottom: 32px;
-  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 56px;
 }
+
+/* Alternating image + text rows. */
+.po-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 64px;
+}
+.po-row--rev .po-media {
+  order: 2; /* image moves to the right */
+}
+.po-row--rev .po-text {
+  order: 1;
+  text-align: right;
+}
+.po-heading {
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--po-heading);
+  margin-bottom: 16px;
+}
+.po-text p {
+  font-size: 16px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* The small "+" registration mark near an image corner. */
+.po-media {
+  position: relative;
+}
+.po-mark {
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  width: 34px;
+  height: 34px;
+  pointer-events: none;
+}
+.po-mark::before,
+.po-mark::after {
+  content: "";
+  position: absolute;
+  background: var(--po-mark);
+}
+.po-mark::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+.po-mark::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+}
+.po-row--rev .po-mark {
+  left: auto;
+  right: -18px;
+}
+
+/* Full-width feature block: a big image with a centered caption. */
+.po-feature {
+  margin-bottom: 64px;
+  text-align: center;
+}
+.po-feature-text {
+  font-size: 16px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 24px;
+}
+
+/* Labelled image grid at the bottom (three across). */
+.po-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.po-grid-item {
+  margin: 0;
+}
+.po-grid-cap {
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--po-heading);
+  margin-bottom: 12px;
+}
+
+/* All images inside the panel. */
 .po-img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 6px;
-  margin-bottom: 24px;
+  border-radius: 8px;
 }
-.po-step {
-  margin-bottom: 32px;
-}
-.po-step-text {
-  font-size: 18px;
-  line-height: 1.5;
-  margin-bottom: 16px;
+
+/* On narrow screens, stack the rows and the grid into a single column. */
+@media (max-width: 640px) {
+  .po-panel {
+    padding: 28px;
+  }
+  .po-row,
+  .po-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .po-row--rev .po-media {
+    order: 0;
+  }
+  .po-row--rev .po-text {
+    text-align: left;
+  }
+  .po-title {
+    font-size: 34px;
+  }
 }
 
 

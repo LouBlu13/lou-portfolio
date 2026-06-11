@@ -56,68 +56,112 @@
         "title": "Editorial Design",
         "desc": " — magazines, posters, visual essays",
         "image": "/img/work-1.jpg",
-        "intro": "Placeholder description of this project. Click into it and replace this text in the CMS.",
-        "gallery": [
-          "/img/work-1.jpg",
-          "/img/work-2.jpg"
-        ],
-        "process": [
+        "intro": "A placeholder project summary. Replace this in the CMS with a short sentence about what the project is.",
+        "blocks": [
           {
-            "text": "Placeholder process step — describe what you did here. Add as many steps as you like.",
-            "image": "/img/work-3.jpg"
+            "heading": "Concept",
+            "text": "Describe this part of the project. This is placeholder text you can edit in the CMS — explain the idea, the brief, or the goal.",
+            "image": "/img/work-1.jpg"
           },
           {
-            "text": "A step can be text only — just leave the image empty in the CMS.",
-            "image": ""
+            "heading": "Craft",
+            "text": "A second block. Blocks alternate sides automatically — this one sits with the image on the right.",
+            "image": "/img/work-2.jpg"
+          },
+          {
+            "heading": "",
+            "text": "Leave a block's heading empty to make it a full-width image with a centered caption, like this one.",
+            "image": "/img/work-3.jpg"
           }
+        ],
+        "gallery": [
+          { "image": "/img/work-4.jpg", "caption": "Sign" },
+          { "image": "/img/work-1.jpg", "caption": "Editorial Design" },
+          { "image": "/img/work-2.jpg", "caption": "Poster" }
         ]
       },
       {
         "title": "Editorial Design",
         "desc": " — magazines, posters, visual essays",
         "image": "/img/work-2.jpg",
-        "intro": "Placeholder description of this project. Click into it and replace this text in the CMS.",
-        "gallery": [
-          "/img/work-2.jpg",
-          "/img/work-3.jpg"
-        ],
-        "process": [
+        "intro": "A placeholder project summary. Replace this in the CMS with a short sentence about what the project is.",
+        "blocks": [
           {
-            "text": "Placeholder process step — describe what you did here.",
+            "heading": "Concept",
+            "text": "Describe this part of the project. This is placeholder text you can edit in the CMS.",
+            "image": "/img/work-2.jpg"
+          },
+          {
+            "heading": "Craft",
+            "text": "A second block, with the image on the right.",
+            "image": "/img/work-3.jpg"
+          },
+          {
+            "heading": "",
+            "text": "A full-width image with a centered caption.",
             "image": "/img/work-4.jpg"
           }
+        ],
+        "gallery": [
+          { "image": "/img/work-1.jpg", "caption": "Sign" },
+          { "image": "/img/work-2.jpg", "caption": "Editorial Design" },
+          { "image": "/img/work-3.jpg", "caption": "Poster" }
         ]
       },
       {
         "title": "Editorial Design",
         "desc": " — magazines, posters, visual essays",
         "image": "/img/work-3.jpg",
-        "intro": "Placeholder description of this project. Click into it and replace this text in the CMS.",
-        "gallery": [
-          "/img/work-3.jpg",
-          "/img/work-4.jpg"
-        ],
-        "process": [
+        "intro": "A placeholder project summary. Replace this in the CMS with a short sentence about what the project is.",
+        "blocks": [
           {
-            "text": "Placeholder process step — describe what you did here.",
+            "heading": "Concept",
+            "text": "Describe this part of the project. This is placeholder text you can edit in the CMS.",
+            "image": "/img/work-3.jpg"
+          },
+          {
+            "heading": "Craft",
+            "text": "A second block, with the image on the right.",
+            "image": "/img/work-4.jpg"
+          },
+          {
+            "heading": "",
+            "text": "A full-width image with a centered caption.",
             "image": "/img/work-1.jpg"
           }
+        ],
+        "gallery": [
+          { "image": "/img/work-2.jpg", "caption": "Sign" },
+          { "image": "/img/work-3.jpg", "caption": "Editorial Design" },
+          { "image": "/img/work-4.jpg", "caption": "Poster" }
         ]
       },
       {
         "title": "Editorial Design",
         "desc": " — magazines, posters, visual essays",
         "image": "/img/work-4.jpg",
-        "intro": "Placeholder description of this project. Click into it and replace this text in the CMS.",
-        "gallery": [
-          "/img/work-4.jpg",
-          "/img/work-1.jpg"
-        ],
-        "process": [
+        "intro": "A placeholder project summary. Replace this in the CMS with a short sentence about what the project is.",
+        "blocks": [
           {
-            "text": "Placeholder process step — describe what you did here.",
+            "heading": "Concept",
+            "text": "Describe this part of the project. This is placeholder text you can edit in the CMS.",
+            "image": "/img/work-4.jpg"
+          },
+          {
+            "heading": "Craft",
+            "text": "A second block, with the image on the right.",
+            "image": "/img/work-1.jpg"
+          },
+          {
+            "heading": "",
+            "text": "A full-width image with a centered caption.",
             "image": "/img/work-2.jpg"
           }
+        ],
+        "gallery": [
+          { "image": "/img/work-3.jpg", "caption": "Sign" },
+          { "image": "/img/work-4.jpg", "caption": "Editorial Design" },
+          { "image": "/img/work-1.jpg", "caption": "Poster" }
         ]
       }
     ]

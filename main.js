@@ -246,32 +246,63 @@ function wireNavigation() {
 /* ---- Work page: open a project's detail panel ---- */
 
 // Build the inner markup for one project's detail panel from its content.json
-// fields: a title, an intro paragraph, a gallery of images, and a list of
-// process steps (each step is text and/or an image). Missing fields are
-// simply skipped, so a project with only a title still opens cleanly.
+// fields:
+//   title   — big heading at the top
+//   intro   — short paragraph under the title
+//   blocks  — image + text sections. A block WITH a heading becomes an
+//             alternating image/text row (left, then right, then left...).
+//             A block with an EMPTY heading becomes a full-width image with a
+//             centered caption.
+//   gallery — a labelled grid of images at the bottom (image + caption).
+// Missing fields are skipped, so a project with only a title still opens fine.
 function projectDetailHTML(p) {
   let html = `<h2 class="po-title">${esc(p.title)}</h2>`;
   if (p.intro) html += `<p class="po-intro">${esc(p.intro)}</p>`;
 
-  if (Array.isArray(p.gallery) && p.gallery.length) {
-    html +=
-      `<div class="po-gallery">` +
-      p.gallery
-        .filter(Boolean) // drop empty image slots
-        .map((src) => `<img class="po-img" src="${esc(src)}" alt="${esc(p.title)}" />`)
-        .join("") +
-      `</div>`;
+  if (Array.isArray(p.blocks)) {
+    let rowCount = 0; // counts headed rows so they alternate sides
+    p.blocks.forEach((b) => {
+      if (!b) return;
+      const img = b.image
+        ? `<img class="po-img" src="${esc(b.image)}" alt="${esc(b.heading || p.title)}" />`
+        : "";
+
+      if (b.heading && b.heading.trim()) {
+        // Alternating image/text row. Every second one is reversed (image right).
+        const reversed = rowCount % 2 === 1 ? " po-row--rev" : "";
+        rowCount++;
+        html +=
+          `<section class="po-row${reversed}">` +
+          `<div class="po-media">${img}<span class="po-mark"></span></div>` +
+          `<div class="po-text"><h3 class="po-heading">${esc(b.heading)}</h3>` +
+          (b.text ? `<p>${esc(b.text)}</p>` : "") +
+          `</div>` +
+          `</section>`;
+      } else {
+        // Full-width feature: big image with a centered caption.
+        html +=
+          `<section class="po-feature">${img}` +
+          (b.text ? `<p class="po-feature-text">${esc(b.text)}</p>` : "") +
+          `</section>`;
+      }
+    });
   }
 
-  if (Array.isArray(p.process) && p.process.length) {
+  if (Array.isArray(p.gallery) && p.gallery.length) {
     html +=
-      `<div class="po-process">` +
-      p.process
-        .map((step) => {
-          let s = `<div class="po-step">`;
-          if (step.text) s += `<p class="po-step-text">${esc(step.text)}</p>`;
-          if (step.image) s += `<img class="po-img" src="${esc(step.image)}" alt="" />`;
-          return s + `</div>`;
+      `<div class="po-grid">` +
+      p.gallery
+        .map((g) => {
+          // Accept either an object {image, caption} or a plain image string.
+          const src = typeof g === "string" ? g : g && g.image;
+          const cap = typeof g === "string" ? "" : (g && g.caption) || "";
+          if (!src) return "";
+          return (
+            `<figure class="po-grid-item">` +
+            (cap ? `<figcaption class="po-grid-cap">${esc(cap)}</figcaption>` : "") +
+            `<img class="po-img" src="${esc(src)}" alt="${esc(cap)}" />` +
+            `</figure>`
+          );
         })
         .join("") +
       `</div>`;
