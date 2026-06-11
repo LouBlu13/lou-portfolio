@@ -1,0 +1,92 @@
+media:
+  input: img
+  output: /img
+
+content:
+  - name: site
+    label: Site Content
+    type: file
+    path: content.json
+    fields:
+      - name: meta
+        label: Meta (SEO)
+        type: object
+        fields:
+          - { name: title, label: Browser title, type: string }
+          - { name: description, label: Description, type: text }
+          - { name: author, label: Author, type: string }
+
+      - name: footer
+        label: Footer
+        type: object
+        fields:
+          - { name: name, label: Name, type: string }
+          - { name: role, label: Role, type: string }
+
+      - name: nav
+        label: Navigation
+        type: object
+        list: true
+        fields:
+          - { name: id, label: Page id, type: string }
+          - { name: label, label: Label, type: string }
+
+      - name: landing
+        label: Landing page
+        type: object
+        fields:
+          - { name: title, label: Title lines, type: string, list: true }
+          - name: circles
+            label: Circles
+            type: object
+            list: true
+            fields:
+              - { name: id, label: Page id, type: string }
+              - { name: label, label: Label, type: string }
+              - { name: color, label: Color, type: string }
+
+      - name: work
+        label: Work page
+        type: object
+        fields:
+          - { name: eyebrow, label: Heading lines, type: string, list: true }
+          - { name: circlePhoto, label: Portrait photo, type: image }
+          - name: projects
+            label: Projects
+            type: object
+            list: true
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: desc, label: Description, type: string }
+              - { name: image, label: Image, type: image }
+
+      - name: about
+        label: About page
+        type: object
+        fields:
+          - { name: hello, label: Greeting lines, type: string, list: true }
+          - { name: name, label: Name lines, type: string, list: true }
+          - { name: bio, label: Bio paragraphs, type: text, list: true }
+          - { name: circlePhoto, label: Portrait photo, type: image }
+          - { name: resumeLabel, label: Resume label, type: string }
+          - name: resume
+            label: Resume entries
+            type: object
+            list: true
+            fields:
+              - { name: period, label: Period, type: string }
+              - { name: text, label: Text, type: string }
+
+      - name: contact
+        label: Contact page
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: circlePhoto, label: Portrait photo, type: image }
+          - name: details
+            label: Details
+            type: object
+            list: true
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: value, label: Value, type: string }
