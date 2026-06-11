@@ -915,17 +915,13 @@ body {
   overflow-x: hidden;
 }
 .po-stage-wrap {
-  position: relative;
-  margin: 0 auto; /* width + height are set by scalePopup() */
+  width: fit-content;
+  margin: 0 auto;
 }
 .po-stage {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 1199px;
   padding: 56px 0 80px;
-  transform-origin: top left;
-  transform: scale(var(--po-scale));
+  zoom: var(--po-scale); /* scales real layout, so the panel scrolls correctly */
   font-family: var(--font);
   color: #fea996;
 }
