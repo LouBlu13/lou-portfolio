@@ -15,39 +15,47 @@
      • Element position  → search the page's section; values are Figma px.
 ═══════════════════════════════════════════════════════════════════ */
 
-
 /* ───────────────────────────────────────────────────────────────────
    RESET + DESIGN TOKENS
 ─────────────────────────────────────────────────────────────────── */
 *,
 *::before,
-*::after { box-sizing: border-box; margin: 0; padding: 0; }
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
   --font: "Inter", sans-serif;
 
   /* Type scale (px @ 1440 base) */
-  --extreme: 48px;   /* contact "Let's connect"            */
-  --big:     24px;   /* nav, eyebrow, card titles, name    */
-  --regular: 19px;   /* body, footer, timeline             */
-  --display: 62px;   /* landing name                       */
+  --extreme: 48px; /* contact "Let's connect"            */
+  --big: 24px; /* nav, eyebrow, card titles, name    */
+  --regular: 19px; /* body, footer, timeline             */
+  --display: 62px; /* landing name                       */
 
   /* Scale factor — overwritten by main.js every resize */
   --scale: 1;
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 body {
   font-family: var(--font);
   background: #1a1517;
-  overflow: hidden;            /* pages fill the window; no scrolling   */
+  overflow: hidden; /* pages fill the window; no scrolling   */
 }
-
 
 /* ───────────────────────────────────────────────────────────────────
    VIEWPORT + PAGES
 ─────────────────────────────────────────────────────────────────── */
-#viewport { position: fixed; inset: 0; }
+#viewport {
+  position: fixed;
+  inset: 0;
+}
 
 /* Each page fills the window and carries its own colour theme.
    Pages are stacked and crossfade via opacity for a seamless transition
@@ -60,22 +68,45 @@ body {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+  transition:
+    opacity 0.5s ease,
+    visibility 0s linear 0.5s;
 }
 .page.active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  z-index: 1;                                   /* incoming page sits on top */
-  transition: opacity 0.5s ease, visibility 0s linear 0s;
+  z-index: 1; /* incoming page sits on top */
+  transition:
+    opacity 0.5s ease,
+    visibility 0s linear 0s;
 }
 
 /* Per-page palette (consumed by nav, text, circles, etc.) */
-.page.landing { --bg:#1a1517; }
-.page.work    { --bg:#380009; --light:#fea996; --bold:#cd1b17; --dim:#9b1212; --solid:#e0301d; }
-.page.about   { --bg:#010080; --light:#82c8e4; --bold:#82c8e4; --dim:#1959b3; --solid:#2161c4; }
-.page.contact { --bg:#0b3e31; --light:#71e6cb; --bold:#71e6cb; --dim:#3ebb9e; --solid:#0a6e54; }
-
+.page.landing {
+  --bg: #1a1517;
+}
+.page.work {
+  --bg: #380009;
+  --light: #fea996;
+  --bold: #cd1b17;
+  --dim: #9b1212;
+  --solid: #e0301d;
+}
+.page.about {
+  --bg: #010080;
+  --light: #82c8e4;
+  --bold: #82c8e4;
+  --dim: #1959b3;
+  --solid: #2161c4;
+}
+.page.contact {
+  --bg: #0b3e31;
+  --light: #71e6cb;
+  --bold: #71e6cb;
+  --dim: #3ebb9e;
+  --solid: #0a6e54;
+}
 
 /* ───────────────────────────────────────────────────────────────────
    STAGE — fixed 1440×720 design surface, scaled to fit the window
@@ -90,7 +121,6 @@ body {
   transform-origin: center center;
 }
 
-
 /* ───────────────────────────────────────────────────────────────────
    SHARED COMPONENTS — nav · footer · "+" mark · placeholder circle
 ─────────────────────────────────────────────────────────────────── */
@@ -99,7 +129,9 @@ body {
 .nav {
   position: absolute;
   top: calc(40px * var(--scale));
-  left: calc(40px * var(--scale));    /* pinned to the top-left corner, identical on every page */
+  left: calc(
+    40px * var(--scale)
+  ); /* pinned to the top-left corner, identical on every page */
   display: flex;
   gap: 1.66em;
   font-size: calc(var(--big) * var(--scale));
@@ -114,7 +146,9 @@ body {
   cursor: pointer;
   transition: opacity 0.2s;
 }
-.nav a:hover { opacity: 0.8; }
+.nav a:hover {
+  opacity: 0.8;
+}
 .nav a.active {
   color: var(--light);
   text-decoration: underline;
@@ -122,8 +156,14 @@ body {
 }
 
 /* Keyboard focus rings for the navigable links (tabindex in HTML) */
-.nav a:focus-visible   { outline: 2px solid var(--light); outline-offset: 4px; }
-.lc-btn:focus-visible  { outline: 2px solid #fff;          outline-offset: 6px; }
+.nav a:focus-visible {
+  outline: 2px solid var(--light);
+  outline-offset: 4px;
+}
+.lc-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+}
 
 /* Footer — pinned bottom-left, scales with --scale */
 .footer {
@@ -148,9 +188,23 @@ body {
   pointer-events: none;
 }
 .plus::before,
-.plus::after { content: ""; position: absolute; background: var(--light); }
-.plus::before { left: 30px; top: 0;  width: 1px;  height: 48px; }  /* vertical   */
-.plus::after  { left: 6px;  top: 24px; width: 48px; height: 1px; } /* horizontal */
+.plus::after {
+  content: "";
+  position: absolute;
+  background: var(--light);
+}
+.plus::before {
+  left: 30px;
+  top: 0;
+  width: 1px;
+  height: 48px;
+} /* vertical   */
+.plus::after {
+  left: 6px;
+  top: 24px;
+  width: 48px;
+  height: 1px;
+} /* horizontal */
 
 /* Photo circle — raw photo, shown untouched (no tint, blend or overlay).
    Cropped to the circle and centred. The image path comes from content.js
@@ -158,12 +212,11 @@ body {
 .pic {
   border-radius: 50%;
   overflow: hidden;
-  background-color: #0d0d12;          /* fallback if the photo is missing */
+  background-color: #0d0d12; /* fallback if the photo is missing */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-
 
 /* ═══════════════════════════════════════════════════════════════════
    PAGE 1 · LANDING
@@ -213,7 +266,9 @@ body {
   border-radius: 50%;
   transition: top 0.3s ease;
 }
-.lc-btn:hover .lc-circle { top: 34px; }
+.lc-btn:hover .lc-circle {
+  top: 34px;
+}
 
 .lc-label {
   position: absolute;
@@ -230,13 +285,20 @@ body {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.lc-btn:hover .lc-label { opacity: 1; }
+.lc-btn:hover .lc-label {
+  opacity: 1;
+}
 
 /* Landing circle colours */
-.lc-circle.red   { background: #e0301d; }
-.lc-circle.blue  { background: #2161c4; }
-.lc-circle.green { background: #0c7d5d; }
-
+.lc-circle.red {
+  background: #e0301d;
+}
+.lc-circle.blue {
+  background: #2161c4;
+}
+.lc-circle.green {
+  background: #0c7d5d;
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    PAGE 2 · WORK
@@ -252,8 +314,14 @@ body {
   text-transform: uppercase;
   line-height: 0.95;
 }
-.t-light { color: var(--light); font-weight: 400; }
-.t-bold  { color: var(--bold);  font-weight: 900; }
+.t-light {
+  color: var(--light);
+  font-weight: 400;
+}
+.t-bold {
+  color: var(--bold);
+  font-weight: 900;
+}
 
 /* 2×2 grid */
 .work-grid {
@@ -268,12 +336,16 @@ body {
   column-gap: 80px;
   row-gap: 20px;
 }
-.work-card { position: relative; cursor: pointer; }
+.work-card {
+  position: relative;
+  cursor: pointer;
+}
 
 /* Text + divider (Figma Component 14 coordinates; divider is #9B1212 / 2px) */
 .work-card-title {
   position: absolute;
-  left: 20px; top: 85px;
+  left: 20px;
+  top: 85px;
   width: 423px;
   font-size: var(--big);
   letter-spacing: 0.04em;
@@ -282,10 +354,13 @@ body {
   line-height: 0.95;
   font-weight: 400;
 }
-.work-card-title strong { font-weight: 900; }
+.work-card-title strong {
+  font-weight: 900;
+}
 .work-card-line {
   position: absolute;
-  left: 20px; top: 173px;
+  left: 20px;
+  top: 173px;
   width: 419px;
   height: 2px;
   border-radius: 1px;
@@ -304,20 +379,23 @@ body {
 .work-card-panel {
   position: absolute;
   left: 34px;
-  top: 142px;                 /* rest: thin strip on the divider (bottom 175) */
+  top: 142px; /* rest: thin strip on the divider (bottom 175) */
   width: 383px;
   height: 33px;
   border-radius: 20px 20px 0 0;
   opacity: 0;
   pointer-events: none;
-  background-color: #1a0507;   /* fallback if an image is missing */
+  background-color: #1a0507; /* fallback if an image is missing */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: top 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  transition:
+    top 0.4s ease,
+    height 0.4s ease,
+    opacity 0.4s ease;
 }
 .work-card:hover .work-card-panel {
-  top: 35px;                  /* hover: grows up to cover the text area */
+  top: 35px; /* hover: grows up to cover the text area */
   height: 140px;
   opacity: 0.4;
 }
@@ -327,21 +405,27 @@ body {
 /* Rest "+" registration mark (Figma elem1: 68.49×66.13 at top-left) */
 .work-card-plus {
   position: absolute;
-  left: 0; top: 0;
-  width: 68.49px; height: 66.13px;
+  left: 0;
+  top: 0;
+  width: 68.49px;
+  height: 66.13px;
   pointer-events: none;
   transition: opacity 0.4s ease;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 68.4864 66.1346' fill='none'%3E%3Cline x1='37.293' y1='0' x2='37.293' y2='29.5243' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='33.1934' y1='36.6104' x2='33.1934' y2='66.1346' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='29.2677' y1='33.4764' x2='0' y2='33.4764' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='68.4863' y1='33.4764' x2='39.2187' y2='33.4764' stroke='%239B1212' stroke-width='2'/%3E%3C/svg%3E");
 }
-.work-card:hover .work-card-plus { opacity: 0; }
+.work-card:hover .work-card-plus {
+  opacity: 0;
+}
 
 /* Hover crop-mark frame (Figma elem: 439.27×174.52 at top-left) */
 .work-card-frame {
   position: absolute;
-  left: 0; top: 0;
-  width: 439.27px; height: 174.52px;
+  left: 0;
+  top: 0;
+  width: 439.27px;
+  height: 174.52px;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -349,7 +433,9 @@ body {
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 439.268 174.524' fill='none'%3E%3Cline x1='33.1934' y1='145' x2='33.1934' y2='174.524' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='37.293' y1='0' x2='37.293' y2='29.5243' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='29.2677' y1='33.4764' x2='0' y2='33.4764' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='439.268' y1='34' x2='410' y2='34' stroke='%239B1212' stroke-width='2'/%3E%3C/svg%3E");
 }
-.work-card:hover .work-card-frame { opacity: 1; }
+.work-card:hover .work-card-frame {
+  opacity: 1;
+}
 
 /* Stacked circles on the right (placeholder over solid) */
 .work-circles {
@@ -361,9 +447,14 @@ body {
   gap: 40px;
 }
 .work-circles .pic,
-.work-circles .solid { width: 299px; height: 299px; border-radius: 50%; }
-.work-circles .solid { background: var(--solid); }
-
+.work-circles .solid {
+  width: 299px;
+  height: 299px;
+  border-radius: 50%;
+}
+.work-circles .solid {
+  background: var(--solid);
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    PAGE 3 · ABOUT
@@ -371,7 +462,13 @@ body {
 
 /* LEFT · Resume timeline — sits in the left zone (ends ~464px, clears the
    centered circle that starts at 496px). */
-.resume-panel { position: absolute; left: 80px; top: 133px; width: 384px; height: 469px; }
+.resume-panel {
+  position: absolute;
+  left: 80px;
+  top: 133px;
+  width: 384px;
+  height: 469px;
+}
 .resume-label {
   display: flex;
   align-items: center;
@@ -384,7 +481,8 @@ body {
 }
 .resume-label::before {
   content: "";
-  width: 6px; height: 6px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--light);
 }
@@ -395,10 +493,13 @@ body {
   height: 405px;
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: none;       /* Firefox: hide bar (wheel still works) */
-  -ms-overflow-style: none;    /* legacy Edge */
+  scrollbar-width: none; /* Firefox: hide bar (wheel still works) */
+  -ms-overflow-style: none; /* legacy Edge */
 }
-.timeline::-webkit-scrollbar { width: 0; height: 0; }   /* WebKit: hide bar */
+.timeline::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+} /* WebKit: hide bar */
 
 /* Inner list — main.js duplicates the entries so the auto-scroll (driven in
    main.js via scrollTop) loops seamlessly. The spine lives here so it moves
@@ -407,20 +508,29 @@ body {
   position: relative;
   padding-left: 27px;
 }
-.timeline-list::before {       /* vertical spine */
+.timeline-list::before {
+  /* vertical spine */
   content: "";
   position: absolute;
-  left: 2px; top: 0; bottom: 0;
+  left: 2px;
+  top: 0;
+  bottom: 0;
   width: 1px;
   background: var(--light);
   opacity: 0.3;
 }
-.t-item { position: relative; margin-bottom: 44px; }  /* gap between resume entries — increase for more space */
-.t-item::before {              /* dot */
+.t-item {
+  position: relative;
+  margin-bottom: 44px;
+} /* gap between resume entries — increase for more space */
+.t-item::before {
+  /* dot */
   content: "";
   position: absolute;
-  left: -29px; top: 4px;
-  width: 5px; height: 5px;
+  left: -29px;
+  top: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--light);
 }
@@ -431,21 +541,27 @@ body {
   color: var(--light);
   line-height: 0.95;
 }
-.t-item .year { margin-bottom: 5px; }
+.t-item .year {
+  margin-bottom: 5px;
+}
 
 /* CENTER · Overlapping circles */
 /* Cluster centered on the 1440×720 stage: bounding box 448×598 → left 496, top 61 */
 .about-circle-solid {
   position: absolute;
-  left: 645px; top: 61px;
-  width: 299px; height: 299px;
+  left: 645px;
+  top: 61px;
+  width: 299px;
+  height: 299px;
   border-radius: 50%;
   background: var(--solid);
 }
 .about-circle-pic {
   position: absolute;
-  left: 496px; top: 360px;
-  width: 299px; height: 299px;
+  left: 496px;
+  top: 360px;
+  width: 299px;
+  height: 299px;
 }
 
 /* RIGHT · Greeting + bio */
@@ -459,12 +575,14 @@ body {
   line-height: 0.95;
 }
 .about-hello {
-  left: 970px; top: 92px;
+  left: 970px;
+  top: 92px;
   font-size: var(--big);
   letter-spacing: 0.14em;
 }
 .about-name {
-  left: 970px; top: 150px;
+  left: 970px;
+  top: 150px;
   width: 360px;
   font-size: var(--big);
   font-weight: 900;
@@ -472,20 +590,27 @@ body {
   text-align: center;
 }
 .about-bio-1 {
-  left: 970px; top: 250px;
+  left: 970px;
+  top: 250px;
   width: 340px;
   font-size: var(--regular);
   letter-spacing: 0.04em;
 }
 .about-bio-2 {
-  left: 970px; top: 415px;
+  left: 970px;
+  top: 415px;
   width: 410px;
   font-size: var(--regular);
   letter-spacing: 0.04em;
 }
-.about-plus-1 { left: 1340px; top: 80px; }   /* top-right marker, clears the name */
-.about-plus-2 { left: 904px;  top: 400px; }   /* just left of the bio, clear of the circle */
-
+.about-plus-1 {
+  left: 1340px;
+  top: 80px;
+} /* top-right marker, clears the name */
+.about-plus-2 {
+  left: 904px;
+  top: 400px;
+} /* just left of the bio, clear of the circle */
 
 /* ═══════════════════════════════════════════════════════════════════
    PAGE 4 · CONTACT
@@ -494,13 +619,17 @@ body {
 /* Overlapping circles (placeholder left, solid teal right) */
 .contact-pic {
   position: absolute;
-  left: 163px; top: 211px;
-  width: 299px; height: 299px;
+  left: 163px;
+  top: 211px;
+  width: 299px;
+  height: 299px;
 }
 .contact-solid {
   position: absolute;
-  left: 471px; top: 211px;
-  width: 299px; height: 299px;
+  left: 471px;
+  top: 211px;
+  width: 299px;
+  height: 299px;
   border-radius: 50%;
   background: var(--solid);
 }
@@ -508,7 +637,8 @@ body {
 /* Heading — overlaps the solid circle */
 .contact-heading {
   position: absolute;
-  left: 623px; top: 330px;
+  left: 623px;
+  top: 330px;
   font-size: var(--extreme);
   font-weight: 900;
   letter-spacing: 0.04em;
@@ -520,7 +650,8 @@ body {
 /* Details — labels | values */
 .contact-details {
   position: absolute;
-  left: 865px; top: 404px;
+  left: 865px;
+  top: 404px;
   display: flex;
   gap: 20px;
   font-size: var(--regular);
@@ -528,13 +659,22 @@ body {
   text-transform: uppercase;
   line-height: 0.95;
 }
-.contact-labels { color: var(--light); }
-.contact-values { color: var(--dim); }
+.contact-labels {
+  color: var(--light);
+}
+.contact-values {
+  color: var(--dim);
+}
 .contact-labels p,
-.contact-values p { margin-bottom: 5px; white-space: nowrap; }
+.contact-values p {
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
 
-.contact-plus { left: 1140px; top: 195px; }
-
+.contact-plus {
+  left: 1140px;
+  top: 195px;
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    CIRCLE "SLIDE-OUT" REVEAL   (Figma component variants Default→Variant2)
@@ -545,35 +685,64 @@ body {
    colour circle); it animates back to 0 (its resting spot).
    Tune the feel with the `0.5s` duration below.
 ═══════════════════════════════════════════════════════════════════ */
-.work-circles .pic { --dx: 0px;   --dy: 339px;  }  /* starts behind red, slides up    */
-.about-circle-pic  { --dx: 149px; --dy: -299px; }  /* starts behind blue, slides down-left */
-.contact-pic       { --dx: 308px; --dy: 0px;    }  /* starts behind teal, slides left */
+.work-circles .pic {
+  --dx: 0px;
+  --dy: 339px;
+} /* starts behind red, slides up    */
+.about-circle-pic {
+  --dx: 149px;
+  --dy: -299px;
+} /* starts behind blue, slides down-left */
+.contact-pic {
+  --dx: 308px;
+  --dy: 0px;
+} /* starts behind teal, slides left */
 
 /* Colour circle in front so the photo can hide behind it and slide out.
    (work circles need positioning for z-index to take effect) */
-.work-circles .pic, .work-circles .solid { position: relative; }
-.work-circles .solid, .about-circle-solid, .contact-solid { z-index: 2; }
-.work-circles .pic,   .about-circle-pic,   .contact-pic   { z-index: 1; }
-.contact-heading { z-index: 3; }   /* keep "Let's connect" in front of the teal circle */
+.work-circles .pic,
+.work-circles .solid {
+  position: relative;
+}
+.work-circles .solid,
+.about-circle-solid,
+.contact-solid {
+  z-index: 2;
+}
+.work-circles .pic,
+.about-circle-pic,
+.contact-pic {
+  z-index: 1;
+}
+.contact-heading {
+  z-index: 3;
+} /* keep "Let's connect" in front of the teal circle */
 
 /* First visit only — `.reveal` is added to the page by main.js on the first
    time it is opened, then removed, so the intro plays once per session. */
 .reveal .work-circles .pic,
 .reveal .about-circle-pic,
 .reveal .contact-pic {
-  animation: circle-reveal 0.5s cubic-bezier(0.2, 1.3, 0.4, 1) both;  /* snappy: fast with a tiny overshoot */
+  animation: circle-reveal 0.5s cubic-bezier(0.2, 1.3, 0.4, 1) both; /* snappy: fast with a tiny overshoot */
   will-change: transform;
 }
 
 @keyframes circle-reveal {
-  from { transform: translate(var(--dx), var(--dy)); }  /* hidden behind the colour circle */
-  to   { transform: translate(0, 0); }                  /* slid out to its resting spot    */
+  from {
+    transform: translate(var(--dx), var(--dy));
+  } /* hidden behind the colour circle */
+  to {
+    transform: translate(0, 0);
+  } /* slid out to its resting spot    */
 }
 
 /* ── Work & Contact: text snaps in a beat after the circle locks
       (0.8s delay, circle finishes at 0.5s). First visit only (.reveal). ── */
-.reveal .work-head, .reveal .work-grid,
-.reveal .contact-heading, .reveal .contact-details, .reveal .contact-plus {
+.reveal .work-head,
+.reveal .work-grid,
+.reveal .contact-heading,
+.reveal .contact-details,
+.reveal .contact-plus {
   animation: text-snap 0.25s cubic-bezier(0.2, 1.5, 0.4, 1) 0.8s both;
 }
 
@@ -582,17 +751,32 @@ body {
       4) résumé slides in from the left.  First visit only (.reveal). ── */
 /* Hello + the name are TYPED OUT by main.js (see .ty / .caret below);
    the "+" still snaps in alongside the name. */
-.reveal .about-plus-1                      { animation: text-snap      0.30s cubic-bezier(0.2,1.5,0.4,1) 1.7s both; }
-.reveal .about-bio-1, .reveal .about-bio-2,
-.reveal .about-plus-2                      { animation: slide-in-right  0.45s cubic-bezier(0.2,0.9,0.3,1) 2.6s both; }
-.reveal .resume-panel                      { animation: slide-in-left   0.45s cubic-bezier(0.2,0.9,0.3,1) 3.4s both; }
+.reveal .about-plus-1 {
+  animation: text-snap 0.3s cubic-bezier(0.2, 1.5, 0.4, 1) 1.7s both;
+}
+.reveal .about-bio-1,
+.reveal .about-bio-2,
+.reveal .about-plus-2 {
+  animation: slide-in-right 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) 2.6s both;
+}
+.reveal .resume-panel {
+  animation: slide-in-left 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) 3.4s both;
+}
 
 /* Typewriter for Hello + name: each character starts hidden and is switched
    on one-by-one; a blinking caret trails the text. main.js builds the spans
    on first visit, so the layout is reserved up front (no reflow jitter). */
-.about-hello .ty, .about-name .ty       { opacity: 0; transition: opacity 0.08s ease; }
-.about-hello .ty.on, .about-name .ty.on { opacity: 1; }
-.about-hello .caret, .about-name .caret {
+.about-hello .ty,
+.about-name .ty {
+  opacity: 0;
+  transition: opacity 0.08s ease;
+}
+.about-hello .ty.on,
+.about-name .ty.on {
+  opacity: 1;
+}
+.about-hello .caret,
+.about-name .caret {
   display: inline-block;
   width: 2px;
   height: 1em;
@@ -601,26 +785,50 @@ body {
   vertical-align: -0.12em;
   animation: caret-blink 0.7s steps(1) infinite;
 }
-@keyframes caret-blink { 50% { opacity: 0; } }
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
 
 @keyframes text-snap {
-  from { opacity: 0; transform: translateY(10px); }   /* hidden, slightly low */
-  to   { opacity: 1; transform: translateY(0); }      /* snapped into place    */
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  } /* hidden, slightly low */
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  } /* snapped into place    */
 }
 @keyframes slide-in-right {
-  from { opacity: 0; transform: translateX(60px); }   /* starts to the right */
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  } /* starts to the right */
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 @keyframes slide-in-left {
-  from { opacity: 0; transform: translateX(-60px); }  /* starts to the left  */
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  } /* starts to the left  */
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
-
 
 /* ───────────────────────────────────────────────────────────────────
    ACCESSIBILITY — honour reduced-motion
 ─────────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
   /* No auto-scroll for these users — the resume stays manually wheel-scrollable */
 }

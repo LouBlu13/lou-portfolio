@@ -24,7 +24,6 @@
   </head>
 
   <body>
-
     <!-- ════════════════════════════════════════════════════════════════
          #viewport — holds the four full-screen pages.
          The page STRUCTURE lives here; the CONTENT is injected by main.js
@@ -33,24 +32,25 @@
          content slots; decorative pieces (circles, "+" marks) stay static.
     ════════════════════════════════════════════════════════════════════ -->
     <div id="viewport">
-
-
       <!-- ── PAGE 1 · LANDING (bg #1a1517) ── -->
       <section class="page landing active" id="landing">
         <div class="stage stage-landing">
           <h1 class="landing-title"><!-- content.js: landing.title --></h1>
           <div class="landing-divider"></div>
-          <div class="landing-circles"><!-- content.js: landing.circles --></div>
+          <div class="landing-circles">
+            <!-- content.js: landing.circles -->
+          </div>
         </div>
       </section>
-
 
       <!-- ── PAGE 2 · WORK (bg #380009) ── -->
       <section class="page work" id="work">
         <nav class="nav"><!-- content.js: nav --></nav>
         <div class="stage">
           <div class="work-head"><!-- content.js: work.eyebrow --></div>
-          <div class="work-grid"><!-- content.js: work.projects (cards) --></div>
+          <div class="work-grid">
+            <!-- content.js: work.projects (cards) -->
+          </div>
           <!-- decorative portrait circles (photo set from content.js) -->
           <div class="work-circles">
             <span class="pic"></span>
@@ -60,15 +60,15 @@
         <footer class="footer"><!-- content.js: footer --></footer>
       </section>
 
-
       <!-- ── PAGE 3 · ABOUT (bg #010080) ── -->
       <section class="page about" id="about">
         <nav class="nav"><!-- content.js: nav --></nav>
         <div class="stage">
-
           <!-- LEFT · résumé (label + auto-scrolling entries) -->
           <div class="resume-panel">
-            <div class="resume-label"><!-- content.js: about.resumeLabel --></div>
+            <div class="resume-label">
+              <!-- content.js: about.resumeLabel -->
+            </div>
             <div class="timeline">
               <div class="timeline-list"><!-- content.js: about.resume --></div>
             </div>
@@ -85,11 +85,9 @@
           <p class="about-bio-1"></p>
           <span class="plus about-plus-2"></span>
           <p class="about-bio-2"></p>
-
         </div>
         <footer class="footer"><!-- content.js: footer --></footer>
       </section>
-
 
       <!-- ── PAGE 4 · CONTACT (bg #0b3e31) ── -->
       <section class="page contact" id="contact">
@@ -100,15 +98,16 @@
           <span class="contact-solid"></span>
 
           <h2 class="contact-heading"><!-- content.js: contact.heading --></h2>
-          <div class="contact-details"><!-- content.js: contact.details --></div>
+          <div class="contact-details">
+            <!-- content.js: contact.details -->
+          </div>
 
           <span class="plus contact-plus"></span>
         </div>
         <footer class="footer"><!-- content.js: footer --></footer>
       </section>
-
-
-    </div><!-- /#viewport -->
+    </div>
+    <!-- /#viewport -->
 
     <!-- content.js first (data), then main.js (renders it + behaviour) -->
     <script src="content.js"></script>
