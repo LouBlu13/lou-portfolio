@@ -58,12 +58,13 @@
         "image": "/img/work-1.jpg",
         "intro": "Placeholder description of this project. Click into it and replace this text in the CMS.",
         "gallery": [
-          "/img/work-1.jpg"
+          "/img/work-1.jpg",
+          "/img/work-2.jpg"
         ],
         "process": [
           {
             "text": "Placeholder process step — describe what you did here. Add as many steps as you like.",
-            "image": "/img/work-1.jpg"
+            "image": "/img/work-3.jpg"
           },
           {
             "text": "A step can be text only — just leave the image empty in the CMS.",
@@ -77,12 +78,13 @@
         "image": "/img/work-2.jpg",
         "intro": "Placeholder description of this project. Click into it and replace this text in the CMS.",
         "gallery": [
-          "/img/work-2.jpg"
+          "/img/work-2.jpg",
+          "/img/work-3.jpg"
         ],
         "process": [
           {
             "text": "Placeholder process step — describe what you did here.",
-            "image": "/img/work-2.jpg"
+            "image": "/img/work-4.jpg"
           }
         ]
       },
@@ -92,12 +94,13 @@
         "image": "/img/work-3.jpg",
         "intro": "Placeholder description of this project. Click into it and replace this text in the CMS.",
         "gallery": [
-          "/img/work-3.jpg"
+          "/img/work-3.jpg",
+          "/img/work-4.jpg"
         ],
         "process": [
           {
             "text": "Placeholder process step — describe what you did here.",
-            "image": "/img/work-3.jpg"
+            "image": "/img/work-1.jpg"
           }
         ]
       },
@@ -107,12 +110,13 @@
         "image": "/img/work-4.jpg",
         "intro": "Placeholder description of this project. Click into it and replace this text in the CMS.",
         "gallery": [
-          "/img/work-4.jpg"
+          "/img/work-4.jpg",
+          "/img/work-1.jpg"
         ],
         "process": [
           {
             "text": "Placeholder process step — describe what you did here.",
-            "image": "/img/work-4.jpg"
+            "image": "/img/work-2.jpg"
           }
         ]
       }
