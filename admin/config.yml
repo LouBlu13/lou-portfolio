@@ -1,0 +1,107 @@
+backend:
+  name: github
+  repo: LouBlu13/lou-portfolio
+  branch: main
+  base_url: https://lou-blumenthal.netlify.app
+
+media_folder: img
+public_folder: /img
+
+collections:
+  - name: "content"
+    label: "Content"
+    files:
+      - name: "content"
+        label: "Site Content"
+        file: "content.json"
+        fields:
+          - label: "Meta"
+            name: "meta"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Author", name: "author", widget: "string" }
+
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+
+          - label: "Navigation"
+            name: "nav"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+
+          - label: "Landing Page"
+            name: "landing"
+            widget: "object"
+            fields:
+              - label: "Title"
+                name: "title"
+                widget: "list"
+                fields:
+                  - { label: "Line", name: "item", widget: "string" }
+
+          - label: "Work Page"
+            name: "work"
+            widget: "object"
+            fields:
+              - label: "Eyebrow"
+                name: "eyebrow"
+                widget: "list"
+                fields:
+                  - { label: "Line", name: "item", widget: "string" }
+              - { label: "Circle Photo", name: "circlePhoto", widget: "image" }
+              - label: "Projects"
+                name: "projects"
+                widget: "list"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "desc", widget: "string" }
+                  - { label: "Image", name: "image", widget: "image" }
+
+          - label: "About Page"
+            name: "about"
+            widget: "object"
+            fields:
+              - label: "Hello"
+                name: "hello"
+                widget: "list"
+                fields:
+                  - { label: "Line", name: "item", widget: "string" }
+              - label: "Name"
+                name: "name"
+                widget: "list"
+                fields:
+                  - { label: "Line", name: "item", widget: "string" }
+              - label: "Bio"
+                name: "bio"
+                widget: "list"
+                fields:
+                  - { label: "Paragraph", name: "item", widget: "text" }
+              - { label: "Circle Photo", name: "circlePhoto", widget: "image" }
+              - { label: "Resume Label", name: "resumeLabel", widget: "string" }
+              - label: "Resume"
+                name: "resume"
+                widget: "list"
+                fields:
+                  - { label: "Period", name: "period", widget: "string" }
+                  - { label: "Text", name: "text", widget: "string" }
+
+          - label: "Contact Page"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Circle Photo", name: "circlePhoto", widget: "image" }
+              - label: "Details"
+                name: "details"
+                widget: "list"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Value", name: "value", widget: "string" }
