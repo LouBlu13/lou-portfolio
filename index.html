@@ -110,6 +110,18 @@
       </section>
     </div>
 
+    <!-- Project detail panel. Hidden until a Work card is clicked; main.js
+         fills .po-content from the clicked project and adds .open to show it.
+         It lives outside #viewport so it covers the whole screen and can
+         scroll on its own. The styling is intentionally minimal for now. -->
+    <div id="project-overlay" aria-hidden="true">
+      <div class="po-backdrop" data-close></div>
+      <div class="po-panel" role="dialog" aria-modal="true" aria-label="Project details">
+        <button class="po-close" type="button" data-close aria-label="Close">×</button>
+        <div class="po-content"><!-- filled by main.js --></div>
+      </div>
+    </div>
+
     <!-- main.js fetches content.json and builds all four pages above -->
     <script src="main.js"></script>
   </body>

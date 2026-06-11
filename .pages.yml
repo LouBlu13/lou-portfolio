@@ -79,8 +79,19 @@ content:
             list: true
             fields:
               - { name: title, label: Title, type: string }
-              - { name: desc, label: Description, type: string }
-              - { name: image, label: Image, type: image }
+              - { name: desc, label: Description (card tagline), type: string }
+              - { name: image, label: Thumbnail image, type: image }
+              # The fields below appear in the detail panel that opens when a
+              # visitor clicks the project card.
+              - { name: intro, label: Intro text, type: text }
+              - { name: gallery, label: Gallery images, type: image, list: true }
+              - name: process
+                label: Process steps (text + image)
+                type: object
+                list: true
+                fields:
+                  - { name: text, label: Text, type: text }
+                  - { name: image, label: Image, type: image }
 
       # The about page: greeting, name, bio paragraphs, photo, and the résumé.
       - name: about

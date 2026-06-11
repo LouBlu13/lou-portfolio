@@ -1,27 +1,21 @@
 # Lou Blumenthal — Portfolio
 
-A hand-coded portfolio for Lou Blumenthal (interaction designer). Four pages —
-Landing, Work, About, Contact — built as a fixed design that scales to any screen.
 
 **Live site:** https://lou-blumenthal.netlify.app/
 
----
-
-## ✏️ Editing the content (no code needed)
-
+## Editing the content
 All text and photos live in `content.json`, edited through a free visual editor —
 you never touch code:
 
 1. Go to **https://app.pagescms.org** and sign in with GitHub.
-2. Open your portfolio project → click **Site Content**.
+2. Open portfolio project → click **Site Content**.
 3. Edit any field (text or images) → click **Save**.
 4. Wait ~1 minute, then refresh the live site (Ctrl + F5). Done.
 
-Works from any computer or phone.
 
 ---
 
-## ☁️ How it's hosted
+## How it's hosted
 
 - Code lives on **GitHub** (private repo).
 - **Netlify** watches the repo and automatically rebuilds + republishes the live
@@ -30,7 +24,7 @@ Works from any computer or phone.
 
 ---
 
-## 📁 Files
+## Files
 
 | File / folder      | What it is                                               |
 | ------------------ | -------------------------------------------------------- |

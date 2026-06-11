@@ -120,10 +120,12 @@ function renderSite() {
   document.querySelector("#work .work-head").innerHTML =
     `<span class="t-light">${esc(C.work.eyebrow[0])}</span><br />` +
     `<span class="t-bold">${esc(C.work.eyebrow[1])}</span>`;
+  // data-index lets the click handler know which project to open; the button
+  // role + tabindex make each card clickable by mouse and keyboard.
   document.querySelector("#work .work-grid").innerHTML = C.work.projects
     .map(
-      (p) =>
-        `<article class="work-card">` +
+      (p, i) =>
+        `<article class="work-card" data-index="${i}" tabindex="0" role="button" aria-label="${esc(p.title)}">` +
         `<span class="work-card-panel" style="background-image:${cssUrl(p.image)}"></span>` + // project image, revealed on hover
         `<span class="work-card-frame"></span>` + // crop marks, shown on hover
         `<span class="work-card-plus"></span>` + // small "+" shown at rest
