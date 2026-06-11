@@ -4,54 +4,130 @@
     "description": "Portfolio of Lou Blumenthal, an interaction designer based in Zürich, Switzerland — work, about, and contact.",
     "author": "Lou Blumenthal"
   },
-  "footer": { "name": "Lou Blumenthal", "role": "Interaction Designer" },
+  "footer": {
+    "name": "Lou Blumenthal",
+    "role": "Interaction Designer"
+  },
   "nav": [
-    { "id": "work", "label": "Work" },
-    { "id": "about", "label": "About" },
-    { "id": "contact", "label": "Contact" }
+    {
+      "id": "work",
+      "label": "Work"
+    },
+    {
+      "id": "about",
+      "label": "About"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    }
   ],
   "landing": {
-    "title": ["Lou Cirill Clau", "Blumenthal"],
+    "title": [
+      "Lou Cirill Clau",
+      "Blumenthal"
+    ],
     "circles": [
-      { "id": "work", "label": "Work", "color": "red" },
-      { "id": "about", "label": "About", "color": "blue" },
-      { "id": "contact", "label": "Contact", "color": "green" }
+      {
+        "id": "work",
+        "label": "Work",
+        "color": "red"
+      },
+      {
+        "id": "about",
+        "label": "About",
+        "color": "blue"
+      },
+      {
+        "id": "contact",
+        "label": "Contact",
+        "color": "green"
+      }
     ]
   },
   "work": {
-    "eyebrow": ["Some of my", "Work"],
-    "circlePhoto": "img/work.jpg",
+    "eyebrow": [
+      "Some of my",
+      "Work"
+    ],
+    "circlePhoto": "/img/work.jpg",
     "projects": [
-      { "title": "Editorial Design", "desc": " — magazines, posters, visual essays", "image": "img/work-1.jpg" },
-      { "title": "Editorial Design", "desc": " — magazines, posters, visual essays", "image": "img/work-2.jpg" },
-      { "title": "Editorial Design", "desc": " — magazines, posters, visual essays", "image": "img/work-3.jpg" },
-      { "title": "Editorial Design", "desc": " — magazines, posters, visual essays", "image": "img/work-4.jpg" }
+      {
+        "title": "Editorial Design",
+        "desc": " — magazines, posters, visual essays",
+        "image": "/img/work-1.jpg"
+      },
+      {
+        "title": "Editorial Design",
+        "desc": " — magazines, posters, visual essays",
+        "image": "/img/work-2.jpg"
+      },
+      {
+        "title": "Editorial Design",
+        "desc": " — magazines, posters, visual essays",
+        "image": "/img/work-3.jpg"
+      },
+      {
+        "title": "Editorial Design",
+        "desc": " — magazines, posters, visual essays",
+        "image": "/img/work-4.jpg"
+      }
     ]
   },
   "about": {
-    "hello": ["Hello,", "My name is"],
-    "name": ["Lou Cyrill Clau.", "Blumenthal"],
+    "hello": [
+      "Hello,",
+      "My name is"
+    ],
+    "name": [
+      "Lou Cyrill Clau.",
+      "Blumenthal"
+    ],
     "bio": [
       "I'm an Interaction Designer based in Zürich, Switzerland. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences.",
       "Transforming my creativity and knowledge into websites has been my passion for the last 3 years. I have been helping various clients to establish their presence online. I always strive to learn about the newest technologies and frameworks."
     ],
-    "circlePhoto": "img/about.jpg",
+    "circlePhoto": "/img/about.jpg",
     "resumeLabel": "Resume",
     "resume": [
-      { "period": "2023 — Present", "text": "Freelance Interaction Designer. Self-employed, Zürich, Switzerland" },
-      { "period": "2021 — 2023", "text": "UX / UI Designer. Bonsai Digital Studio, Zürich" },
-      { "period": "2020 — 2021", "text": "Junior Web Designer. Nordlicht Agency, Berlin, Germany" },
-      { "period": "2017 — 2020", "text": "Bachelor's in Graphic & Visual Communication Design. Central European Design Institute, Prague" },
-      { "period": "2015 — 2017", "text": "Foundation Diploma in Visual Arts. Kantonsschule Zürich" }
+      {
+        "period": "2023 — Present",
+        "text": "Freelance Interaction Designer. Self-employed, Zürich, Switzerland"
+      },
+      {
+        "period": "2021 — 2023",
+        "text": "UX / UI Designer. Bonsai Digital Studio, Zürich"
+      },
+      {
+        "period": "2020 — 2021",
+        "text": "Junior Web Designer. Nordlicht Agency, Berlin, Germany"
+      },
+      {
+        "period": "2017 — 2020",
+        "text": "Bachelor's in Graphic & Visual Communication Design. Central European Design Institute, Prague"
+      },
+      {
+        "period": "2015 — 2017",
+        "text": "Foundation Diploma in Visual Arts. Kantonsschule Zürich"
+      }
     ]
   },
   "contact": {
     "heading": "Let's connect",
-    "circlePhoto": "img/contact.jpg",
+    "circlePhoto": "/img/contact.jpg",
     "details": [
-      { "label": "Email:", "value": "LOU.BLUMENTHAL@ZHDK.CH" },
-      { "label": "Phone:", "value": "+410 000 00 00" },
-      { "label": "Instagram:", "value": "@en.dood" }
+      {
+        "label": "Email:",
+        "value": "LOU.BLUMENTHAL@ZHDK.CH"
+      },
+      {
+        "label": "Phone:",
+        "value": "+41 000 00 00"
+      },
+      {
+        "label": "Instagram:",
+        "value": "@en.dood"
+      }
     ]
   }
 }
