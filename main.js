@@ -243,6 +243,82 @@ function wireNavigation() {
 }
 
 
+/* ---- Work page: open a project's detail panel ---- */
+
+// Build the inner markup for one project's detail panel from its content.json
+// fields: a title, an intro paragraph, a gallery of images, and a list of
+// process steps (each step is text and/or an image). Missing fields are
+// simply skipped, so a project with only a title still opens cleanly.
+function projectDetailHTML(p) {
+  let html = `<h2 class="po-title">${esc(p.title)}</h2>`;
+  if (p.intro) html += `<p class="po-intro">${esc(p.intro)}</p>`;
+
+  if (Array.isArray(p.gallery) && p.gallery.length) {
+    html +=
+      `<div class="po-gallery">` +
+      p.gallery
+        .filter(Boolean) // drop empty image slots
+        .map((src) => `<img class="po-img" src="${esc(src)}" alt="${esc(p.title)}" />`)
+        .join("") +
+      `</div>`;
+  }
+
+  if (Array.isArray(p.process) && p.process.length) {
+    html +=
+      `<div class="po-process">` +
+      p.process
+        .map((step) => {
+          let s = `<div class="po-step">`;
+          if (step.text) s += `<p class="po-step-text">${esc(step.text)}</p>`;
+          if (step.image) s += `<img class="po-img" src="${esc(step.image)}" alt="" />`;
+          return s + `</div>`;
+        })
+        .join("") +
+      `</div>`;
+  }
+  return html;
+}
+
+// Fill and show the detail panel for the project at the given index.
+function openProject(i) {
+  const p = SITE_CONTENT.work.projects[i];
+  if (!p) return;
+  const overlay = document.getElementById("project-overlay");
+  overlay.querySelector(".po-content").innerHTML = projectDetailHTML(p);
+  overlay.querySelector(".po-panel").scrollTop = 0; // start at the top each time
+  overlay.classList.add("open");
+  overlay.setAttribute("aria-hidden", "false");
+  overlay.querySelector(".po-close").focus(); // move keyboard focus into the panel
+}
+
+// Hide the detail panel.
+function closeProject() {
+  const overlay = document.getElementById("project-overlay");
+  overlay.classList.remove("open");
+  overlay.setAttribute("aria-hidden", "true");
+}
+
+// Connect the Work cards (open on click or Enter/Space) and the panel's close
+// controls (the X button, clicking the dark backdrop, or pressing Escape).
+function wireProjects() {
+  document.querySelectorAll(".work-card[data-index]").forEach((el) => {
+    el.addEventListener("click", () => openProject(Number(el.dataset.index)));
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openProject(Number(el.dataset.index));
+      }
+    });
+  });
+  document.querySelectorAll("#project-overlay [data-close]").forEach((el) => {
+    el.addEventListener("click", closeProject);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeProject();
+  });
+}
+
+
 /* ---- About page: typewriter for the greeting and name ---- */
 
 // Start the two typed lines (skipped for visitors who prefer reduced motion).
@@ -366,6 +442,7 @@ async function boot() {
   }
   renderSite();
   wireNavigation();
+  wireProjects();
   window.addEventListener("resize", scaleApp);
   showPage("landing");
 }

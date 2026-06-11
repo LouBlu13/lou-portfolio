@@ -822,6 +822,99 @@ body {
 }
 
 
+/* ==== Project detail panel (opens from the Work page) ==== */
+
+/* Everything below is placeholder styling — colours, spacing, and sizes are
+   deliberately plain so you can restyle the panel later. The behaviour (open
+   on card click, scroll, close) does not depend on these looks. */
+
+/* Make a Work card show a focus ring when tabbed to (it is now a button). */
+.work-card:focus-visible {
+  outline: 2px solid var(--light);
+  outline-offset: 4px;
+}
+
+/* The overlay layer. Covers the whole screen; hidden until main.js adds .open.
+   It sits above the pages (z-index 100) and is independent of the scaled stage. */
+#project-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+}
+#project-overlay.open {
+  display: block;
+}
+
+/* The dimmed area behind the panel; clicking it closes the panel. */
+.po-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* The panel itself: centred, capped width, and scrolls on its own if the
+   content is taller than the screen. */
+.po-panel {
+  position: absolute;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(900px, 90vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #1a1517;
+  color: #fff;
+  padding: 48px;
+  border-radius: 8px;
+}
+
+/* The close (×) button, kept in view at the top-right while you scroll. */
+.po-close {
+  position: sticky;
+  top: 0;
+  display: block;
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  line-height: 1;
+  color: #fff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Content blocks inside the panel. */
+.po-title {
+  font-size: 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+.po-intro {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 32px;
+  opacity: 0.85;
+}
+.po-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+.po-step {
+  margin-bottom: 32px;
+}
+.po-step-text {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+
 /* ---- Accessibility: respect the "reduce motion" setting ---- */
 
 /* Visitors who ask their system for less motion get no transitions or
