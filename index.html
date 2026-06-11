@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Title + description are also kept in content.js (main.js syncs them) -->
+    <!-- Title and description also live in content.json; main.js copies them
+         from there on load so the two stay in sync. -->
     <title>Lou Blumenthal — Interaction Designer</title>
     <meta
       name="description"
@@ -12,7 +13,7 @@
     />
     <meta name="author" content="Lou Blumenthal" />
 
-    <!-- Inter font (Regular 400 + Black 900) -->
+    <!-- Inter font, two weights: 400 (regular) and 900 (black) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,61 +25,62 @@
   </head>
 
   <body>
-    <!-- ════════════════════════════════════════════════════════════════
-         #viewport — holds the four full-screen pages.
-         The page STRUCTURE lives here; the CONTENT is injected by main.js
-         from content.js (so a CMS can later supply the same data).
-         Elements left empty below (e.g. .nav, .work-grid, .footer) are
-         content slots; decorative pieces (circles, "+" marks) stay static.
-    ════════════════════════════════════════════════════════════════════ -->
+    <!--
+      This file holds only the page STRUCTURE. The actual words and images are
+      filled in by main.js from content.json. The empty elements below (nav,
+      grids, headings, footer) are placeholders that main.js writes into; the
+      decorative pieces (coloured circles, "+" marks) are fixed and stay here.
+
+      To change wording or photos, edit content.json (or use the CMS) — not this file.
+    -->
     <div id="viewport">
-      <!-- ── PAGE 1 · LANDING (bg #1a1517) ── -->
+      <!-- Page 1: Landing (dark background) -->
       <section class="page landing active" id="landing">
         <div class="stage stage-landing">
-          <h1 class="landing-title"><!-- content.js: landing.title --></h1>
+          <h1 class="landing-title"><!-- from content.json: landing.title --></h1>
           <div class="landing-divider"></div>
           <div class="landing-circles">
-            <!-- content.js: landing.circles -->
+            <!-- from content.json: landing.circles -->
           </div>
         </div>
       </section>
 
-      <!-- ── PAGE 2 · WORK (bg #380009) ── -->
+      <!-- Page 2: Work (deep red background) -->
       <section class="page work" id="work">
-        <nav class="nav"><!-- content.js: nav --></nav>
+        <nav class="nav"><!-- from content.json: nav --></nav>
         <div class="stage">
-          <div class="work-head"><!-- content.js: work.eyebrow --></div>
+          <div class="work-head"><!-- from content.json: work.eyebrow --></div>
           <div class="work-grid">
-            <!-- content.js: work.projects (cards) -->
+            <!-- from content.json: work.projects (one card each) -->
           </div>
-          <!-- decorative portrait circles (photo set from content.js) -->
+          <!-- Portrait photo + solid circle (photo set by main.js) -->
           <div class="work-circles">
             <span class="pic"></span>
             <span class="solid"></span>
           </div>
         </div>
-        <footer class="footer"><!-- content.js: footer --></footer>
+        <footer class="footer"><!-- from content.json: footer --></footer>
       </section>
 
-      <!-- ── PAGE 3 · ABOUT (bg #010080) ── -->
+      <!-- Page 3: About (blue background) -->
       <section class="page about" id="about">
-        <nav class="nav"><!-- content.js: nav --></nav>
+        <nav class="nav"><!-- from content.json: nav --></nav>
         <div class="stage">
-          <!-- LEFT · résumé (label + auto-scrolling entries) -->
+          <!-- Left: résumé label + the auto-scrolling list of entries -->
           <div class="resume-panel">
             <div class="resume-label">
-              <!-- content.js: about.resumeLabel -->
+              <!-- from content.json: about.resumeLabel -->
             </div>
             <div class="timeline">
-              <div class="timeline-list"><!-- content.js: about.resume --></div>
+              <div class="timeline-list"><!-- from content.json: about.resume --></div>
             </div>
           </div>
 
-          <!-- CENTER · overlapping circles (photo set from content.js) -->
+          <!-- Center: the two overlapping circles (photo set by main.js) -->
           <span class="about-circle-solid"></span>
           <span class="about-circle-pic pic"></span>
 
-          <!-- RIGHT · greeting + bio (text from content.js) -->
+          <!-- Right: greeting, name, and two bio paragraphs (text set by main.js) -->
           <p class="about-hello"></p>
           <p class="about-name"></p>
           <span class="plus about-plus-1"></span>
@@ -86,30 +88,29 @@
           <span class="plus about-plus-2"></span>
           <p class="about-bio-2"></p>
         </div>
-        <footer class="footer"><!-- content.js: footer --></footer>
+        <footer class="footer"><!-- from content.json: footer --></footer>
       </section>
 
-      <!-- ── PAGE 4 · CONTACT (bg #0b3e31) ── -->
+      <!-- Page 4: Contact (green background) -->
       <section class="page contact" id="contact">
-        <nav class="nav"><!-- content.js: nav --></nav>
+        <nav class="nav"><!-- from content.json: nav --></nav>
         <div class="stage">
-          <!-- overlapping circles (photo set from content.js) -->
+          <!-- Overlapping circles (photo set by main.js) -->
           <span class="contact-pic pic"></span>
           <span class="contact-solid"></span>
 
-          <h2 class="contact-heading"><!-- content.js: contact.heading --></h2>
+          <h2 class="contact-heading"><!-- from content.json: contact.heading --></h2>
           <div class="contact-details">
-            <!-- content.js: contact.details -->
+            <!-- from content.json: contact.details -->
           </div>
 
           <span class="plus contact-plus"></span>
         </div>
-        <footer class="footer"><!-- content.js: footer --></footer>
+        <footer class="footer"><!-- from content.json: footer --></footer>
       </section>
     </div>
-    <!-- /#viewport -->
 
-    <!-- main.js fetches content.json (the CMS-editable data) and builds the pages -->
+    <!-- main.js fetches content.json and builds all four pages above -->
     <script src="main.js"></script>
   </body>
 </html>

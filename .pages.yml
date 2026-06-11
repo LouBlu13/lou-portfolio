@@ -1,13 +1,28 @@
+# .pages.yml — configuration for Pages CMS (the visual editor at app.pagescms.org).
+#
+# It describes the editing form: which file holds the content and what fields
+# to show for each part of it. The structure here mirrors content.json exactly.
+# If you add a new field to content.json, add it here too so it appears in the
+# editor.
+#
+# Field "type" values used below: string (one line), text (multi-line),
+# image (file picker), object (a group of fields). Adding "list: true" makes a
+# field repeatable.
+
+# Where uploaded images are stored (input) and how their path is written into
+# content.json (output).
 media:
   input: img
   output: /img
 
 content:
+  # A single editable file: content.json, shown in the editor as "Site Content".
   - name: site
     label: Site Content
     type: file
     path: content.json
     fields:
+      # Browser-tab title, search description, author.
       - name: meta
         label: Meta (SEO)
         type: object
@@ -16,6 +31,7 @@ content:
           - { name: description, label: Description, type: text }
           - { name: author, label: Author, type: string }
 
+      # The name + role shown in the corner of every inner page.
       - name: footer
         label: Footer
         type: object
@@ -23,6 +39,7 @@ content:
           - { name: name, label: Name, type: string }
           - { name: role, label: Role, type: string }
 
+      # The menu links. "id" must match a page id (work / about / contact).
       - name: nav
         label: Navigation
         type: object
@@ -31,6 +48,9 @@ content:
           - { name: id, label: Page id, type: string }
           - { name: label, label: Label, type: string }
 
+      # The landing page: the big name (one entry per line) and the three
+      # circle buttons. Each circle's "id" is the page it opens; "color" is
+      # red, blue, or green.
       - name: landing
         label: Landing page
         type: object
@@ -45,6 +65,8 @@ content:
               - { name: label, label: Label, type: string }
               - { name: color, label: Color, type: string }
 
+      # The work page: the two-line heading, the portrait photo, and the
+      # project cards.
       - name: work
         label: Work page
         type: object
@@ -60,6 +82,7 @@ content:
               - { name: desc, label: Description, type: string }
               - { name: image, label: Image, type: image }
 
+      # The about page: greeting, name, bio paragraphs, photo, and the résumé.
       - name: about
         label: About page
         type: object
@@ -77,6 +100,7 @@ content:
               - { name: period, label: Period, type: string }
               - { name: text, label: Text, type: string }
 
+      # The contact page: heading, photo, and the label/value detail rows.
       - name: contact
         label: Contact page
         type: object
