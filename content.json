@@ -53,7 +53,7 @@
     "circlePhoto": "/img/work.jpg",
     "projects": [
       {
-        "title": "Editorial Design",
+        "title": "Project1.",
         "desc": " — magazines, posters, visual essays",
         "image": "/img/work-1.jpg",
         "intro": "A placeholder project summary. Replace this in the CMS with a short sentence about what the project is.",
@@ -61,23 +61,31 @@
           {
             "heading": "Concept",
             "text": "Describe this part of the project. This is placeholder text you can edit in the CMS — explain the idea, the brief, or the goal.",
-            "image": "/img/work-1.jpg"
+            "image": "/img/Home.png"
           },
           {
             "heading": "Craft",
             "text": "A second block. Blocks alternate sides automatically — this one sits with the image on the right.",
-            "image": "/img/work-2.jpg"
+            "image": "/img/AnyConv.com__download.jpg"
           },
           {
-            "heading": "",
             "text": "Leave a block's heading empty to make it a full-width image with a centered caption, like this one.",
-            "image": "/img/work-3.jpg"
+            "image": "/img/A4 - 1.png"
           }
         ],
         "gallery": [
-          { "image": "/img/work-4.jpg", "caption": "Sign" },
-          { "image": "/img/work-1.jpg", "caption": "Editorial Design" },
-          { "image": "/img/work-2.jpg", "caption": "Poster" }
+          {
+            "image": "/img/work-4.jpg",
+            "caption": "Sign"
+          },
+          {
+            "image": "/img/work-1.jpg",
+            "caption": "Editorial Design"
+          },
+          {
+            "image": "/img/work-2.jpg",
+            "caption": "Poster"
+          }
         ]
       },
       {
@@ -97,15 +105,23 @@
             "image": "/img/work-3.jpg"
           },
           {
-            "heading": "",
             "text": "A full-width image with a centered caption.",
             "image": "/img/work-4.jpg"
           }
         ],
         "gallery": [
-          { "image": "/img/work-1.jpg", "caption": "Sign" },
-          { "image": "/img/work-2.jpg", "caption": "Editorial Design" },
-          { "image": "/img/work-3.jpg", "caption": "Poster" }
+          {
+            "image": "/img/work-1.jpg",
+            "caption": "Sign"
+          },
+          {
+            "image": "/img/work-2.jpg",
+            "caption": "Editorial Design"
+          },
+          {
+            "image": "/img/work-3.jpg",
+            "caption": "Poster"
+          }
         ]
       },
       {
@@ -125,15 +141,23 @@
             "image": "/img/work-4.jpg"
           },
           {
-            "heading": "",
             "text": "A full-width image with a centered caption.",
             "image": "/img/work-1.jpg"
           }
         ],
         "gallery": [
-          { "image": "/img/work-2.jpg", "caption": "Sign" },
-          { "image": "/img/work-3.jpg", "caption": "Editorial Design" },
-          { "image": "/img/work-4.jpg", "caption": "Poster" }
+          {
+            "image": "/img/work-2.jpg",
+            "caption": "Sign"
+          },
+          {
+            "image": "/img/work-3.jpg",
+            "caption": "Editorial Design"
+          },
+          {
+            "image": "/img/work-4.jpg",
+            "caption": "Poster"
+          }
         ]
       },
       {
@@ -153,15 +177,23 @@
             "image": "/img/work-1.jpg"
           },
           {
-            "heading": "",
             "text": "A full-width image with a centered caption.",
             "image": "/img/work-2.jpg"
           }
         ],
         "gallery": [
-          { "image": "/img/work-3.jpg", "caption": "Sign" },
-          { "image": "/img/work-4.jpg", "caption": "Editorial Design" },
-          { "image": "/img/work-1.jpg", "caption": "Poster" }
+          {
+            "image": "/img/work-3.jpg",
+            "caption": "Sign"
+          },
+          {
+            "image": "/img/work-4.jpg",
+            "caption": "Editorial Design"
+          },
+          {
+            "image": "/img/work-1.jpg",
+            "caption": "Poster"
+          }
         ]
       }
     ]
