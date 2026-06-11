@@ -1,0 +1,11 @@
+# Netlify response headers.
+# Always revalidate the code + content so the browser never runs a stale
+# cached version after an update. Images can still be cached normally.
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+/main.js
+  Cache-Control: public, max-age=0, must-revalidate
+/styles.css
+  Cache-Control: public, max-age=0, must-revalidate
+/content.json
+  Cache-Control: public, max-age=0, must-revalidate

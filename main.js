@@ -494,8 +494,13 @@ async function boot() {
   renderSite();
   wireNavigation();
   wireProjects();
-  window.addEventListener("resize", scaleApp);
   showPage("landing");
 }
+
+// Scale the fixed stage to the window right away and on every resize, so the
+// layout always fits the screen — even before content.json has loaded, or if a
+// later step ever fails. (showPage also calls scaleApp once content is in.)
+scaleApp();
+window.addEventListener("resize", scaleApp);
 
 boot();
