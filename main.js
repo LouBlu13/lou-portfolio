@@ -260,7 +260,7 @@ function projectDetailHTML(p) {
   if (p.intro) html += `<p class="po-intro">${esc(p.intro)}</p>`;
 
   if (Array.isArray(p.blocks)) {
-    let rowCount = 0; // counts headed rows so they alternate sides
+    let rowCount = 0; // headed rows alternate sides (left, right, left, ...)
     p.blocks.forEach((b) => {
       if (!b) return;
       const img = b.image
@@ -268,21 +268,24 @@ function projectDetailHTML(p) {
         : "";
 
       if (b.heading && b.heading.trim()) {
-        // Alternating image/text row. Every second one is reversed (image right).
-        const reversed = rowCount % 2 === 1 ? " po-row--rev" : "";
+        // Alternating image/text row, with a "+" mark in the corner.
+        const rev = rowCount % 2 === 1 ? " po-row--rev" : "";
         rowCount++;
         html +=
-          `<section class="po-row${reversed}">` +
-          `<div class="po-media">${img}<span class="po-mark"></span></div>` +
-          `<div class="po-text"><h3 class="po-heading">${esc(b.heading)}</h3>` +
-          (b.text ? `<p>${esc(b.text)}</p>` : "") +
+          `<section class="po-row${rev}">` +
+          `<span class="po-mark"></span>` +
+          `<div class="po-media">${img}</div>` +
+          `<div class="po-info">` +
+          `<h3 class="po-heading">${esc(b.heading)}</h3>` +
+          (b.text ? `<p class="po-body">${esc(b.text)}</p>` : "") +
           `</div>` +
           `</section>`;
       } else {
-        // Full-width feature: big image with a centered caption.
+        // Full-width feature image with a centered caption (empty heading).
         html +=
-          `<section class="po-feature">${img}` +
-          (b.text ? `<p class="po-feature-text">${esc(b.text)}</p>` : "") +
+          `<section class="po-feature">` +
+          `<div class="po-feature-media">${img}</div>` +
+          (b.text ? `<p class="po-caption">${esc(b.text)}</p>` : "") +
           `</section>`;
       }
     });
@@ -290,7 +293,7 @@ function projectDetailHTML(p) {
 
   if (Array.isArray(p.gallery) && p.gallery.length) {
     html +=
-      `<div class="po-grid">` +
+      `<div class="po-strip">` +
       p.gallery
         .map((g) => {
           // Accept either an object {image, caption} or a plain image string.
@@ -298,8 +301,8 @@ function projectDetailHTML(p) {
           const cap = typeof g === "string" ? "" : (g && g.caption) || "";
           if (!src) return "";
           return (
-            `<figure class="po-grid-item">` +
-            (cap ? `<figcaption class="po-grid-cap">${esc(cap)}</figcaption>` : "") +
+            `<figure class="po-card">` +
+            (cap ? `<figcaption class="po-card-label">${esc(cap)}</figcaption>` : "") +
             `<img class="po-img" src="${esc(src)}" alt="${esc(cap)}" />` +
             `</figure>`
           );
@@ -310,16 +313,34 @@ function projectDetailHTML(p) {
   return html;
 }
 
-// Fill and show the detail panel for the project at the given index.
+// Fill and show the detail panel for the project at the given index, then size
+// the scaled stage to fit.
 function openProject(i) {
   const p = SITE_CONTENT.work.projects[i];
   if (!p) return;
   const overlay = document.getElementById("project-overlay");
   overlay.querySelector(".po-content").innerHTML = projectDetailHTML(p);
-  overlay.querySelector(".po-panel").scrollTop = 0; // start at the top each time
   overlay.classList.add("open");
   overlay.setAttribute("aria-hidden", "false");
+  scalePopup(); // size the design stage now that the panel is visible
+  overlay.querySelector(".po-scroll").scrollTop = 0; // start at the top each time
   overlay.querySelector(".po-close").focus(); // move keyboard focus into the panel
+}
+
+// Scale the fixed 1199px-wide design stage so it fits the panel's width, and
+// size its wrapper to the scaled height so the panel scrolls correctly. This is
+// the same fixed-stage-then-scale idea the rest of the site uses.
+function scalePopup() {
+  const overlay = document.getElementById("project-overlay");
+  if (!overlay.classList.contains("open")) return;
+  const DESIGN_W = 1199;
+  const scroll = overlay.querySelector(".po-scroll");
+  const wrap = overlay.querySelector(".po-stage-wrap");
+  const stage = overlay.querySelector(".po-stage");
+  const scale = Math.min(scroll.clientWidth / DESIGN_W, 1.3);
+  overlay.style.setProperty("--po-scale", scale);
+  wrap.style.width = DESIGN_W * scale + "px";
+  wrap.style.height = stage.offsetHeight * scale + "px"; // offsetHeight is the unscaled height
 }
 
 // Hide the detail panel.
@@ -347,6 +368,7 @@ function wireProjects() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeProject();
   });
+  window.addEventListener("resize", scalePopup); // re-fit the stage on resize
 }
 
 

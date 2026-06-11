@@ -822,22 +822,18 @@ body {
 }
 
 
-/* ==== Project detail panel (opens from the Work page) ==== */
+/* ==== Project detail panel — reproduces the Figma design (nodes 114:721 / 114:776) ==== */
 
-/* Colours live in these variables so the whole panel is easy to re-theme.
-   They use the Work page's red/coral palette on a light background, to match
-   the design. The behaviour (open on click, scroll, close) does not depend on
-   these looks, so restyle freely. */
+/* The panel is a dark sheet that slides up over the Work page. Inside it, the
+   content is laid out on a fixed 1199px-wide "stage" at the design's exact pixel
+   coordinates; scalePopup() in main.js then scales that stage to fit the window,
+   the same idea the rest of the site uses for its fixed stages. */
 #project-overlay {
-  --po-bg: #ffffff;
-  --po-heading: #cd1b17;
-  --po-text: #d2503a;
-  --po-mark: #cd1b17;
-
+  --po-scale: 1; /* set by scalePopup() */
   position: fixed;
   inset: 0;
   z-index: 100;
-  display: none; /* hidden until main.js adds .open */
+  display: none; /* shown when main.js adds .open */
 }
 #project-overlay.open {
   display: block;
@@ -849,186 +845,226 @@ body {
   outline-offset: 4px;
 }
 
-/* The dimmed area behind the panel; clicking it closes the panel. */
+/* Clicking the exposed page around the sheet closes it (no dimming, so the
+   Work page stays visible around the edges like in the design). */
 .po-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
 }
 
-/* The panel: centred, capped width, scrolls on its own when taller than the screen. */
-.po-panel {
+/* The sheet: dark panel, red border, rounded top, inset from the screen edges. */
+.po-sheet {
   position: absolute;
-  top: 4vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(960px, 92vw);
-  max-height: 92vh;
-  overflow-y: auto;
-  background: var(--po-bg);
-  color: var(--po-text);
-  padding: 64px;
-  border-radius: 10px;
+  left: 20px;
+  right: 20px;
+  top: 8vh;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background: #380009;
+  border: 2px solid #9b1212;
+  border-bottom: 0;
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
 }
 
-/* The close (×) button, kept in the top-right corner while you scroll. */
+/* The bright header bar holding the close button. */
+.po-bar {
+  flex: 0 0 auto;
+  height: calc(92px * var(--po-scale));
+  min-height: 52px;
+  background: #9b1212;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: calc(40px * var(--po-scale));
+}
 .po-close {
-  position: sticky;
-  top: 0;
-  display: block;
-  margin-left: auto;
-  width: 44px;
-  height: 44px;
-  font-size: 30px;
-  line-height: 1;
-  color: var(--po-heading);
-  background: var(--po-bg);
-  border: none;
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  border: 0;
   cursor: pointer;
 }
+.po-close::before,
+.po-close::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 3px;
+  border-radius: 2px;
+  background: #fea996;
+}
+.po-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.po-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
 
-/* Big project title. */
+/* The scroll area and the scaled design stage inside it. */
+.po-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.po-stage-wrap {
+  position: relative;
+  margin: 0 auto; /* width + height are set by scalePopup() */
+}
+.po-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1199px;
+  padding: 56px 0 80px;
+  transform-origin: top left;
+  transform: scale(var(--po-scale));
+  font-family: var(--font);
+  color: #fea996;
+}
+
+/* Title (Figma: Inter Black 48px, #cd1b17). */
 .po-title {
+  margin: 0 0 0 54px;
   font-size: 48px;
   font-weight: 900;
+  letter-spacing: 1.92px;
+  line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  color: var(--po-heading);
-  margin-bottom: 40px;
+  color: #cd1b17;
 }
 
-/* Short intro paragraph under the title. */
+/* Optional intro paragraph under the title. */
 .po-intro {
-  font-size: 18px;
-  line-height: 1.5;
+  width: 1091px;
+  margin: 32px 0 0 54px;
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 0.76px;
+  line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  margin-bottom: 56px;
 }
 
-/* Alternating image + text rows. */
+/* Alternating image + text rows. Each block is exactly 1199 x 391 like the
+   design, with its parts placed at their design coordinates. */
 .po-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
-  margin-bottom: 64px;
+  position: relative;
+  width: 1199px;
+  height: 391px;
+  margin-top: 80px;
+}
+.po-media {
+  position: absolute;
+  left: 54px;
+  top: 51px;
+  width: 510px;
+  height: 340px;
 }
 .po-row--rev .po-media {
-  order: 2; /* image moves to the right */
+  left: 635px;
 }
-.po-row--rev .po-text {
-  order: 1;
+.po-info {
+  position: absolute;
+  left: 589px;
+  top: 51px;
+  width: 610px;
+}
+.po-row--rev .po-info {
+  left: 0;
   text-align: right;
 }
 .po-heading {
   font-size: 24px;
   font-weight: 900;
+  letter-spacing: 0.96px;
+  line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--po-heading);
-  margin-bottom: 16px;
 }
-.po-text p {
-  font-size: 16px;
-  line-height: 1.5;
+.po-body {
+  margin-top: 17px;
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 0.76px;
+  line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
 }
 
-/* The small "+" registration mark near an image corner. */
-.po-media {
-  position: relative;
-}
+/* The "+" registration mark in a block's corner (same mark as the Work cards). */
 .po-mark {
   position: absolute;
-  top: -18px;
-  left: -18px;
-  width: 34px;
-  height: 34px;
-  pointer-events: none;
-}
-.po-mark::before,
-.po-mark::after {
-  content: "";
-  position: absolute;
-  background: var(--po-mark);
-}
-.po-mark::before {
-  left: 50%;
-  top: 0;
-  width: 1px;
-  height: 100%;
-}
-.po-mark::after {
-  top: 50%;
   left: 0;
-  height: 1px;
-  width: 100%;
+  top: 0;
+  width: 68.49px;
+  height: 66.13px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 68.4864 66.1346' fill='none'%3E%3Cline x1='37.293' y1='0' x2='37.293' y2='29.5243' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='33.1934' y1='36.6104' x2='33.1934' y2='66.1346' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='29.2677' y1='33.4764' x2='0' y2='33.4764' stroke='%239B1212' stroke-width='2'/%3E%3Cline x1='68.4863' y1='33.4764' x2='39.2187' y2='33.4764' stroke='%239B1212' stroke-width='2'/%3E%3C/svg%3E");
 }
 .po-row--rev .po-mark {
   left: auto;
-  right: -18px;
+  right: 0;
+  transform: scaleX(-1);
 }
 
-/* Full-width feature block: a big image with a centered caption. */
+/* Full-width feature image with a centered caption. */
 .po-feature {
-  margin-bottom: 64px;
+  margin-top: 80px;
   text-align: center;
 }
-.po-feature-text {
-  font-size: 16px;
-  line-height: 1.5;
+.po-feature-media {
+  width: 1091px;
+  height: 728px;
+  margin: 0 auto;
+}
+.po-caption {
+  width: 1092px;
+  margin: 80px auto 0;
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 0.76px;
+  line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  margin-top: 24px;
+  text-align: center;
 }
 
-/* Labelled image grid at the bottom (three across). */
-.po-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+/* Bottom strip of labelled cards (scrolls sideways if it overflows). */
+.po-strip {
+  display: flex;
+  gap: 20px;
+  margin-top: 80px;
+  padding-left: 54px;
+  overflow-x: auto;
 }
-.po-grid-item {
+.po-card {
+  flex: 0 0 auto;
+  width: 510px;
   margin: 0;
 }
-.po-grid-cap {
-  font-size: 16px;
+.po-card-label {
+  margin-bottom: 41px;
+  font-size: 24px;
   font-weight: 900;
+  letter-spacing: 0.96px;
+  line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--po-heading);
-  margin-bottom: 12px;
 }
 
-/* All images inside the panel. */
+/* Images: cropped to their box and rounded like the design. */
 .po-img {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: 8px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 20px;
+  background: #1a0507;
 }
-
-/* On narrow screens, stack the rows and the grid into a single column. */
-@media (max-width: 640px) {
-  .po-panel {
-    padding: 28px;
-  }
-  .po-row,
-  .po-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  .po-row--rev .po-media {
-    order: 0;
-  }
-  .po-row--rev .po-text {
-    text-align: left;
-  }
-  .po-title {
-    font-size: 34px;
-  }
+.po-feature-media .po-img {
+  height: 728px;
 }
 
 

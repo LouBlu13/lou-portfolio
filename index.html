@@ -116,9 +116,17 @@
          scroll on its own. The styling is intentionally minimal for now. -->
     <div id="project-overlay" aria-hidden="true">
       <div class="po-backdrop" data-close></div>
-      <div class="po-panel" role="dialog" aria-modal="true" aria-label="Project details">
-        <button class="po-close" type="button" data-close aria-label="Close">×</button>
-        <div class="po-content"><!-- filled by main.js --></div>
+      <div class="po-sheet" role="dialog" aria-modal="true" aria-label="Project details">
+        <div class="po-bar">
+          <button class="po-close" type="button" data-close aria-label="Close"></button>
+        </div>
+        <div class="po-scroll">
+          <div class="po-stage-wrap">
+            <div class="po-stage">
+              <div class="po-content"><!-- filled by main.js --></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
