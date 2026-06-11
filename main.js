@@ -25,6 +25,8 @@ const RESUME_SPEED = 36;      // résumé auto-scroll, px/sec (lower = calmer)
 
 const visited = new Set();    // pages whose intro animation has already played
 
+let SITE_CONTENT = null;      // loaded from content.json at boot (the CMS edits that file)
+
 
 /* ───────────────────────────────────────────────────────────────────
    0 · RENDER  (build the DOM from content.js)
@@ -295,9 +297,21 @@ function wireNavigation() {
 
 
 /* ───────────────────────────────────────────────────────────────────
-   BOOT  (render content → wire behaviour → show landing)
+   BOOT
+   Load content.json (the CMS-editable data), then render → wire → show.
+   `no-store` so edits made via the CMS show up without a hard refresh.
 ─────────────────────────────────────────────────────────────────── */
-renderSite();
-wireNavigation();
-window.addEventListener("resize", scaleApp);
-showPage("landing");
+async function boot() {
+  try {
+    SITE_CONTENT = await fetch("content.json", { cache: "no-store" }).then((r) => r.json());
+  } catch (err) {
+    console.error("Could not load content.json", err);
+    return; // page stays empty rather than half-rendering
+  }
+  renderSite();
+  wireNavigation();
+  window.addEventListener("resize", scaleApp);
+  showPage("landing");
+}
+
+boot();
