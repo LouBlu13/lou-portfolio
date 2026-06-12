@@ -1,21 +1,7 @@
-/*
-  styles.css — all the styling for the portfolio.
-
-  How the layout works:
-  - Every page is laid out on a fixed 1440 x 720 "stage" using the exact pixel
-    coordinates from the Figma design. main.js sets the CSS variable --scale so
-    each stage shrinks or grows to fit the window.
-  - The nav (top-left) and footer (bottom-left) are pinned to the window
-    corners and scale by the same factor.
-
-  Where to edit common things:
-  - Page colours .......... the ".page.work / .about / .contact" blocks below.
-  - Font sizes ............ the :root variables ("Type scale").
-  - An element's position .. find that page's section; the values are Figma px.
-*/
+/* styles.css — all styling. pages are laid out on a fixed stage and scaled to the window. */
 
 
-/* ---- Reset + design tokens ---- */
+/* reset */
 
 *,
 *::before,
@@ -25,42 +11,42 @@
   padding: 0;
 }
 
+/* tokens: font, font sizes, scale */
 :root {
   --font: "Inter", sans-serif;
 
-  /* Type scale (pixels at the 1440 base width) */
-  --extreme: 48px; /* contact "Let's connect" */
-  --big: 24px; /* nav, eyebrow, card titles, name */
-  --regular: 19px; /* body, footer, timeline */
-  --display: 62px; /* landing name */
+  /* font sizes */
+  --extreme: 48px;
+  --big: 24px;
+  --regular: 19px;
+  --display: 62px;
 
-  /* Scale factor. Overwritten by main.js on every resize. */
+  /* scale factor (set by main.js) */
   --scale: 1;
 }
 
+/* root: no page scrolling */
 html,
 body {
   height: 100%;
-  overflow: hidden; /* never let the page itself scroll or overflow horizontally */
+  overflow: hidden;
 }
 
 body {
   font-family: var(--font);
   background: #1a1517;
-  overflow: hidden; /* each page fills the window; the page itself never scrolls */
+  overflow: hidden;
 }
 
 
-/* ---- Viewport + pages ---- */
+/* viewport + pages */
 
 #viewport {
   position: fixed;
   inset: 0;
 }
 
-/* Each page fills the window and carries its own colour theme. The pages are
-   stacked on top of each other and crossfade with opacity, so one colour
-   blends into the next while switching. */
+/* one full-screen page, hidden by default, crossfades */
 .page {
   position: absolute;
   inset: 0;
@@ -74,19 +60,18 @@ body {
     visibility 0s linear 0.5s;
 }
 
-/* The visible page. */
+/* the visible page */
 .page.active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  z-index: 1; /* the incoming page sits on top during the crossfade */
+  z-index: 1;
   transition:
     opacity 0.5s ease,
     visibility 0s linear 0s;
 }
 
-/* The colour palette for each page. These variables (--bg, --light, --bold,
-   --dim, --solid) are used by the nav, text, and circles on that page. */
+/* per-page colours */
 .page.landing {
   --bg: #1a1517;
 }
@@ -113,7 +98,7 @@ body {
 }
 
 
-/* ---- The stage: the fixed 1440 x 720 surface, scaled to fit the window ---- */
+/* the stage: fixed-size surface, scaled to the window */
 
 .stage {
   position: absolute;
@@ -126,10 +111,9 @@ body {
 }
 
 
-/* ---- Shared components: nav, footer, "+" mark, photo circle ---- */
+/* shared parts: nav, footer, "+" mark, photo circle */
 
-/* Navigation. Pinned to the top-left corner and scaled with --scale, so it
-   sits in the same spot on every page. */
+/* nav (top-left, scaled) */
 .nav {
   position: absolute;
   top: calc(40px * var(--scale));
@@ -151,13 +135,14 @@ body {
 .nav a:hover {
   opacity: 0.8;
 }
+/* current page link */
 .nav a.active {
   color: var(--light);
   text-decoration: underline;
   text-underline-offset: 0.18em;
 }
 
-/* Keyboard focus rings for the links you can tab to. */
+/* keyboard focus rings */
 .nav a:focus-visible {
   outline: 2px solid var(--light);
   outline-offset: 4px;
@@ -167,7 +152,7 @@ body {
   outline-offset: 6px;
 }
 
-/* Footer. Pinned to the bottom-left corner and scaled with --scale. */
+/* footer (bottom-left, scaled) */
 .footer {
   position: absolute;
   left: calc(80px * var(--scale));
@@ -182,7 +167,7 @@ body {
   z-index: 10;
 }
 
-/* The thin registration "+" mark (slightly asymmetric, like the Figma design). */
+/* "+" mark */
 .plus {
   position: absolute;
   width: 60px;
@@ -199,29 +184,27 @@ body {
   left: 30px;
   top: 0;
   width: 1px;
-  height: 48px; /* the vertical stroke */
+  height: 48px;
 }
 .plus::after {
   left: 6px;
   top: 24px;
   width: 48px;
-  height: 1px; /* the horizontal stroke */
+  height: 1px;
 }
 
-/* Photo circle. Shows the raw photo (no tint or overlay), cropped to a circle
-   and centred. The image path comes from content.json (main.js sets it
-   inline); only the shape and sizing live here. */
+/* photo circle (image set by main.js) */
 .pic {
   border-radius: 50%;
   overflow: hidden;
-  background-color: #0d0d12; /* fallback colour if the photo is missing */
+  background-color: #0d0d12;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 
-/* ==== Page 1: Landing ==== */
+/* landing page */
 
 .stage-landing {
   display: flex;
@@ -230,6 +213,7 @@ body {
   justify-content: center;
 }
 
+/* title */
 .landing-title {
   font-size: var(--display);
   font-weight: 400;
@@ -239,20 +223,21 @@ body {
   letter-spacing: 0.04em;
   line-height: 0.95;
 }
+/* divider line */
 .landing-divider {
   width: 1025px;
   height: 1px;
   background: rgba(255, 255, 255, 0.25);
   margin-top: 26px;
 }
+/* circle buttons row */
 .landing-circles {
   display: flex;
   gap: 40px;
   margin-top: 48px;
 }
 
-/* One circle button. 379 x 479 hit area with the 359px circle inset, matching
-   the Figma layout. */
+/* one circle button */
 .lc-btn {
   position: relative;
   width: 379px;
@@ -269,11 +254,12 @@ body {
   border-radius: 50%;
   transition: top 0.3s ease;
 }
+/* lift on hover */
 .lc-btn:hover .lc-circle {
-  top: 34px; /* the circle lifts slightly on hover */
+  top: 34px;
 }
 
-/* The circle's label fades in on hover. */
+/* label, fades in on hover */
 .lc-label {
   position: absolute;
   left: 50%;
@@ -293,7 +279,7 @@ body {
   opacity: 1;
 }
 
-/* The three landing circle colours. */
+/* circle colours */
 .lc-circle.red {
   background: #e0301d;
 }
@@ -305,9 +291,9 @@ body {
 }
 
 
-/* ==== Page 2: Work ==== */
+/* work page */
 
-/* The two-line eyebrow heading at the top-left. */
+/* heading */
 .work-head {
   position: absolute;
   left: 81px;
@@ -326,7 +312,7 @@ body {
   font-weight: 900;
 }
 
-/* The 2 x 2 grid of project cards. */
+/* project grid */
 .work-grid {
   position: absolute;
   left: 81px;
@@ -344,8 +330,7 @@ body {
   cursor: pointer;
 }
 
-/* Card title and the divider line beneath it (Figma coordinates; the divider
-   is the --dim colour, 2px tall). */
+/* card title */
 .work-card-title {
   position: absolute;
   left: 20px;
@@ -361,6 +346,7 @@ body {
 .work-card-title strong {
   font-weight: 900;
 }
+/* divider under title */
 .work-card-line {
   position: absolute;
   left: 20px;
@@ -371,26 +357,17 @@ body {
   background: var(--dim);
 }
 
-/* Hover reveal for a card:
-   - At rest: a small registration "+" sits at the top-left.
-   - On hover: a translucent image panel grows up from the divider line, four
-     crop marks frame the card, and the "+" fades out.
-   The "+" and crop-mark shapes are inline SVGs that copy the Figma marks
-   exactly (colour #9B1212, 2px strokes). */
-
-/* The image panel. Its bottom edge sits on the divider (175px down) and it
-   grows upward on hover. Kept slightly translucent on hover so the title stays
-   readable. The per-card image is set inline by main.js (work.projects[].image). */
+/* hover image panel (grows up on hover) */
 .work-card-panel {
   position: absolute;
   left: 34px;
-  top: 142px; /* at rest: just a thin strip resting on the divider */
+  top: 142px;
   width: 383px;
   height: 33px;
   border-radius: 20px 20px 0 0;
   opacity: 0;
   pointer-events: none;
-  background-color: #1a0507; /* fallback colour if an image is missing */
+  background-color: #1a0507;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -400,12 +377,12 @@ body {
     opacity 0.4s ease;
 }
 .work-card:hover .work-card-panel {
-  top: 35px; /* on hover: grows up to cover the title area */
+  top: 35px;
   height: 140px;
   opacity: 0.4;
 }
 
-/* The small "+" mark shown at rest (68.49 x 66.13 at the top-left). */
+/* rest "+" mark (svg) */
 .work-card-plus {
   position: absolute;
   left: 0;
@@ -422,7 +399,7 @@ body {
   opacity: 0;
 }
 
-/* The four crop marks shown on hover (439.27 x 174.52 at the top-left). */
+/* hover crop marks (svg) */
 .work-card-frame {
   position: absolute;
   left: 0;
@@ -440,7 +417,7 @@ body {
   opacity: 1;
 }
 
-/* The stacked circles on the right (photo over a solid colour circle). */
+/* photo + solid circle (right) */
 .work-circles {
   position: absolute;
   left: 1140px;
@@ -460,10 +437,9 @@ body {
 }
 
 
-/* ==== Page 3: About ==== */
+/* about page */
 
-/* Left column: the résumé. It sits in the left zone (ending around 464px) so
-   it clears the centred circle, which starts at 496px. */
+/* left: resume panel */
 .resume-panel {
   position: absolute;
   left: 80px;
@@ -481,37 +457,37 @@ body {
   color: var(--light);
   margin-bottom: 26px;
 }
+/* dot before label */
 .resume-label::before {
   content: "";
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--light); /* the small dot before the label */
+  background: var(--light);
 }
 
-/* The scroll viewport. It scrolls via the auto-loop and the mouse wheel, but
-   the scrollbar itself is hidden for a clean look. */
+/* scroll area, scrollbar hidden */
 .timeline {
   position: relative;
   height: 405px;
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: none; /* Firefox: hide the bar (wheel still works) */
-  -ms-overflow-style: none; /* old Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 .timeline::-webkit-scrollbar {
   width: 0;
-  height: 0; /* Chrome / Safari: hide the bar */
+  height: 0;
 }
 
-/* The list of entries. main.js duplicates these so the auto-scroll loops
-   seamlessly. The vertical spine lives here so it moves with the entries. */
+/* list of entries (duplicated by main.js for the loop) */
 .timeline-list {
   position: relative;
   padding-left: 27px;
 }
+/* vertical line */
 .timeline-list::before {
-  content: ""; /* the vertical spine line */
+  content: "";
   position: absolute;
   left: 2px;
   top: 0;
@@ -520,12 +496,14 @@ body {
   background: var(--light);
   opacity: 0.3;
 }
+/* one entry */
 .t-item {
   position: relative;
-  margin-bottom: 44px; /* space between résumé entries — raise for more room */
+  margin-bottom: 44px;
 }
+/* dot per entry */
 .t-item::before {
-  content: ""; /* the dot on the spine for each entry */
+  content: "";
   position: absolute;
   left: -29px;
   top: 4px;
@@ -545,8 +523,7 @@ body {
   margin-bottom: 5px;
 }
 
-/* Centre: the two overlapping circles. The cluster is centred on the stage
-   (its bounding box is 448 x 598, so it starts at left 496, top 61). */
+/* center: overlapping circles */
 .about-circle-solid {
   position: absolute;
   left: 645px;
@@ -564,7 +541,7 @@ body {
   height: 299px;
 }
 
-/* Right column: greeting, name, and the two bio paragraphs. */
+/* right: greeting, name, bio */
 .about-hello,
 .about-name,
 .about-bio-1,
@@ -605,17 +582,17 @@ body {
 }
 .about-plus-1 {
   left: 1340px;
-  top: 80px; /* top-right marker, clear of the name */
+  top: 80px;
 }
 .about-plus-2 {
   left: 904px;
-  top: 400px; /* just left of the bio, clear of the circle */
+  top: 400px;
 }
 
 
-/* ==== Page 4: Contact ==== */
+/* contact page */
 
-/* The overlapping circles (photo on the left, solid teal on the right). */
+/* overlapping circles */
 .contact-pic {
   position: absolute;
   left: 163px;
@@ -633,7 +610,7 @@ body {
   background: var(--solid);
 }
 
-/* The heading, which overlaps the solid circle. */
+/* heading */
 .contact-heading {
   position: absolute;
   left: 623px;
@@ -646,7 +623,7 @@ body {
   line-height: 0.95;
 }
 
-/* The contact details, shown as two columns: labels and values. */
+/* details: two columns (labels / values) */
 .contact-details {
   position: absolute;
   left: 865px;
@@ -676,29 +653,23 @@ body {
 }
 
 
-/* ==== Intro animations ==== */
+/* intro animations */
 
-/* Circle "slide-out" reveal.
-   The photo circle starts hidden behind the solid colour circle, then slides
-   out to its resting position once, each time the page opens (it does not
-   loop). --dx / --dy is where the photo starts (on top of the colour circle);
-   it animates back to 0,0 (its resting spot). Change the 0.5s below to adjust
-   the speed. */
+/* circle slide-out: start offset (--dx/--dy), animates to 0,0 */
 .work-circles .pic {
   --dx: 0px;
-  --dy: 339px; /* starts behind the red circle, slides up */
+  --dy: 339px;
 }
 .about-circle-pic {
   --dx: 149px;
-  --dy: -299px; /* starts behind the blue circle, slides down-left */
+  --dy: -299px;
 }
 .contact-pic {
   --dx: 308px;
-  --dy: 0px; /* starts behind the teal circle, slides left */
+  --dy: 0px;
 }
 
-/* The colour circle sits in front so the photo can hide behind it and slide
-   out. (The work circles need positioning for z-index to take effect.) */
+/* stacking: colour circle in front, photo behind */
 .work-circles .pic,
 .work-circles .solid {
   position: relative;
@@ -714,29 +685,27 @@ body {
   z-index: 1;
 }
 .contact-heading {
-  z-index: 3; /* keep "Let's connect" in front of the teal circle */
+  z-index: 3;
 }
 
-/* The intro plays only on the first visit: main.js adds .reveal the first time
-   a page opens, then removes it, so the animation runs once per session. */
+/* run intro once per page (.reveal added by main.js) */
 .reveal .work-circles .pic,
 .reveal .about-circle-pic,
 .reveal .contact-pic {
-  animation: circle-reveal 0.5s cubic-bezier(0.2, 1.3, 0.4, 1) both; /* fast, with a tiny overshoot */
+  animation: circle-reveal 0.5s cubic-bezier(0.2, 1.3, 0.4, 1) both;
   will-change: transform;
 }
 
 @keyframes circle-reveal {
   from {
-    transform: translate(var(--dx), var(--dy)); /* hidden behind the colour circle */
+    transform: translate(var(--dx), var(--dy));
   }
   to {
-    transform: translate(0, 0); /* slid out to its resting spot */
+    transform: translate(0, 0);
   }
 }
 
-/* Work + Contact: the text snaps in a beat after the circle locks (0.8s delay;
-   the circle finishes at 0.5s). First visit only. */
+/* work + contact: text snaps in after the circle */
 .reveal .work-head,
 .reveal .work-grid,
 .reveal .contact-heading,
@@ -745,11 +714,7 @@ body {
   animation: text-snap 0.25s cubic-bezier(0.2, 1.5, 0.4, 1) 0.8s both;
 }
 
-/* About: a staggered entrance, paced for reading, after the circle snaps:
-   1) "Hello, My name is" and 2) the name are typed out by main.js (see the
-   .ty / .caret rules below); the "+" snaps in beside the name; 3) the bio
-   slides in from the right; 4) the résumé slides in from the left. First
-   visit only. */
+/* about: staggered entrance (greeting/name are typed by main.js) */
 .reveal .about-plus-1 {
   animation: text-snap 0.3s cubic-bezier(0.2, 1.5, 0.4, 1) 1.7s both;
 }
@@ -762,10 +727,7 @@ body {
   animation: slide-in-left 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) 3.4s both;
 }
 
-/* Typewriter for the greeting and name. Each letter starts hidden and is
-   switched on one by one (main.js adds .on); a blinking caret trails the text.
-   main.js builds the letter spans on the first visit, so the space is reserved
-   up front and nothing jumps. */
+/* typewriter letters + caret (driven by main.js) */
 .about-hello .ty,
 .about-name .ty {
   opacity: 0;
@@ -794,17 +756,17 @@ body {
 @keyframes text-snap {
   from {
     opacity: 0;
-    transform: translateY(10px); /* hidden, slightly low */
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0); /* snapped into place */
+    transform: translateY(0);
   }
 }
 @keyframes slide-in-right {
   from {
     opacity: 0;
-    transform: translateX(60px); /* starts to the right */
+    transform: translateX(60px);
   }
   to {
     opacity: 1;
@@ -814,7 +776,7 @@ body {
 @keyframes slide-in-left {
   from {
     opacity: 0;
-    transform: translateX(-60px); /* starts to the left */
+    transform: translateX(-60px);
   }
   to {
     opacity: 1;
@@ -823,39 +785,34 @@ body {
 }
 
 
-/* ==== Project detail panel — reproduces the Figma design (nodes 114:721 / 114:776) ==== */
+/* project detail panel (opens from a work card) */
 
-/* The panel is a dark sheet that slides up over the Work page. Inside it, the
-   content is laid out on a fixed 1199px-wide "stage" at the design's exact pixel
-   coordinates; scalePopup() in main.js then scales that stage to fit the window,
-   the same idea the rest of the site uses for its fixed stages. */
+/* overlay wrapper */
 #project-overlay {
-  --po-scale: 1; /* set by scalePopup() */
+  --po-scale: 1;
   position: fixed;
   inset: 0;
   z-index: 100;
-  display: none; /* shown when main.js adds .open */
+  display: none;
 }
 #project-overlay.open {
   display: block;
 }
 
-/* Make a Work card show a focus ring when tabbed to (it is now a button). */
+/* card focus ring */
 .work-card:focus-visible {
   outline: 2px solid var(--light);
   outline-offset: 4px;
 }
 
-/* Dim the page behind; clicking it closes the panel. */
+/* backdrop, click to close */
 .po-backdrop {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
 }
 
-/* The sheet: a centered dark panel sized relative to the screen (its width is
-   1199px * the scale set by scalePopup, so it never grows past the design size)
-   and capped in height, scrolling inside. */
+/* the sheet (centered, scaled by --po-scale) */
 .po-sheet {
   position: absolute;
   top: 50%;
@@ -871,7 +828,7 @@ body {
   overflow: hidden;
 }
 
-/* The bright header bar holding the close button. */
+/* header bar */
 .po-bar {
   flex: 0 0 auto;
   height: calc(92px * var(--po-scale));
@@ -882,6 +839,7 @@ body {
   justify-content: flex-end;
   padding-right: calc(40px * var(--po-scale));
 }
+/* close button (x drawn with two lines) */
 .po-close {
   position: relative;
   width: 38px;
@@ -908,10 +866,10 @@ body {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-/* The scroll area and the scaled design stage inside it. */
+/* scroll area + scaled stage */
 .po-scroll {
   flex: 1 1 auto;
-  min-height: 0; /* let the scroll area shrink inside the flex column */
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -919,15 +877,16 @@ body {
   width: fit-content;
   margin: 0 auto;
 }
+/* zoom scales the whole stage */
 .po-stage {
   width: 1199px;
   padding: 56px 0 80px;
-  zoom: var(--po-scale); /* scales real layout, so the panel scrolls correctly */
+  zoom: var(--po-scale);
   font-family: var(--font);
   color: #fea996;
 }
 
-/* Title (Figma: Inter Black 48px, #cd1b17). */
+/* title */
 .po-title {
   margin: 0 0 0 54px;
   font-size: 48px;
@@ -938,7 +897,7 @@ body {
   color: #cd1b17;
 }
 
-/* Optional intro paragraph under the title. */
+/* intro paragraph */
 .po-intro {
   width: 1091px;
   margin: 32px 0 0 54px;
@@ -949,8 +908,7 @@ body {
   text-transform: uppercase;
 }
 
-/* Alternating image + text rows. Each block is exactly 1199 x 391 like the
-   design, with its parts placed at their design coordinates. */
+/* image + text row */
 .po-row {
   position: relative;
   width: 1199px;
@@ -964,6 +922,7 @@ body {
   width: 510px;
   height: 340px;
 }
+/* reversed row: image on the right */
 .po-row--rev .po-media {
   left: 635px;
 }
@@ -993,7 +952,7 @@ body {
   text-transform: uppercase;
 }
 
-/* The "+" registration mark in a block's corner (same mark as the Work cards). */
+/* "+" mark (svg) */
 .po-mark {
   position: absolute;
   left: 0;
@@ -1011,7 +970,7 @@ body {
   transform: scaleX(-1);
 }
 
-/* Full-width feature image with a centered caption. */
+/* full-width image + caption */
 .po-feature {
   margin-top: 80px;
   text-align: center;
@@ -1032,7 +991,7 @@ body {
   text-align: center;
 }
 
-/* Bottom strip of labelled cards (scrolls sideways if it overflows). */
+/* bottom image strip */
 .po-strip {
   display: flex;
   gap: 20px;
@@ -1054,7 +1013,7 @@ body {
   text-transform: uppercase;
 }
 
-/* Images: cropped to their box and rounded like the design. */
+/* panel images */
 .po-img {
   display: block;
   width: 100%;
@@ -1068,10 +1027,7 @@ body {
 }
 
 
-/* ---- Accessibility: respect the "reduce motion" setting ---- */
-
-/* Visitors who ask their system for less motion get no transitions or
-   animations. The résumé simply stays manually scrollable with the wheel. */
+/* reduced motion: turn off transitions + animations */
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

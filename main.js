@@ -1,70 +1,52 @@
 "use strict";
 
-/*
-  main.js — builds the portfolio pages and runs the interactions.
-
-  The short version:
-  - All the words and image paths live in content.json.
-  - When the page loads, boot() fetches that file, builds the four pages from
-    it, wires up the navigation, and shows the landing page.
-  - All four pages exist at the same time; only one is visible. Switching
-    pages just toggles a CSS class and the pages crossfade.
-
-  To change wording or photos, edit content.json (or use the CMS).
-  Edit this file only to change behaviour: timings, animations, wiring.
-*/
+// main.js — loads content.json and builds the pages, runs the interactions.
 
 
-/* ---- Settings you may want to tweak ---- */
+// settings
 
-// The four page ids. These must match the id="" on each <section> in
-// index.html and the ids used in content.json (nav links + landing circles).
+// page ids (match the section ids in index.html and ids in content.json)
 const PAGES = ["landing", "work", "about", "contact"];
 
-// The design was drawn on a fixed 1440 x 720 canvas (a "stage"). Everything is
-// positioned in those pixels and then scaled to fit the window (see scaleApp).
-// BASE_H is a little taller than 720 so content never touches the edges.
+// design canvas size, used to scale the stage to the window
 const BASE_W = 1440;
 const BASE_H = 760;
 
-// How long (in milliseconds) you must hover a nav link before it opens that
-// page. This stops pages flashing past as the mouse crosses the menu.
+// hover delay before a nav link opens its page (ms)
 const NAV_HOVER_DELAY = 150;
 
-// Speed of the résumé's gentle auto-scroll, in pixels per second.
-// Lower = calmer.
+// resume auto-scroll speed (pixels per second)
 const RESUME_SPEED = 36;
 
 
-/* ---- Internal state (don't usually need to touch) ---- */
+// state
 
-// Pages whose one-time intro animation has already played this visit.
+// pages whose intro animation has already played
 const visited = new Set();
 
-// The contents of content.json once it has loaded. Stays null until boot runs.
+// the loaded content.json
 let SITE_CONTENT = null;
 
 
-/* ---- Small helpers ---- */
+// helpers
 
-// Escape the characters that mean something special in HTML, so text coming
-// from content.json can never accidentally break or inject markup.
+// escape html special characters
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-// Wrap a path in a CSS url(). Single quotes keep it safe inside style="...".
+// wrap a path in css url()
 const cssUrl = (path) => `url('${path}')`;
 
-// Set one element's background image from a content.json image path.
+// set an element's background image
 function setBackground(selector, path) {
   const el = document.querySelector(selector);
   if (el && path) el.style.backgroundImage = cssUrl(path);
 }
 
 
-/* ---- Rendering: turn content.json into page markup ---- */
+// rendering
 
-// Build the navigation links. The link for the current page gets .active.
+// build the nav links (current page gets .active)
 function navHTML(activeId) {
   return SITE_CONTENT.nav
     .map((n) => {
@@ -74,26 +56,24 @@ function navHTML(activeId) {
     .join("");
 }
 
-// Build the footer (name + role) shown on every inner page.
+// build the footer (name + role)
 function footerHTML() {
   const f = SITE_CONTENT.footer;
   return `<span>${esc(f.name)}</span><span>${esc(f.role)}</span>`;
 }
 
-// Fill every empty shell in index.html with the content from content.json.
+// fill all the empty parts of index.html from content.json
 function renderSite() {
   const C = SITE_CONTENT;
 
-  // Browser-tab title and meta description. They also exist in index.html;
-  // copying them here keeps both in step with content.json.
+  // page title + meta description
   if (C.meta) {
     if (C.meta.title) document.title = C.meta.title;
     const desc = document.querySelector('meta[name="description"]');
     if (desc && C.meta.description) desc.setAttribute("content", C.meta.description);
   }
 
-  // Nav + footer on the three inner pages. The active nav link is the page
-  // it lives on.
+  // nav + footer on the inner pages
   ["work", "about", "contact"].forEach((id) => {
     const nav = document.querySelector(`#${id} .nav`);
     if (nav) nav.innerHTML = navHTML(id);
@@ -101,8 +81,7 @@ function renderSite() {
     if (footer) footer.innerHTML = footerHTML();
   });
 
-  // Landing: the big name (one <br> per line in the array) and the three
-  // circle buttons that lead to the other pages.
+  // landing: title + circle buttons
   document.querySelector("#landing .landing-title").innerHTML =
     C.landing.title.map(esc).join("<br />");
   document.querySelector("#landing .landing-circles").innerHTML = C.landing.circles
@@ -115,29 +94,26 @@ function renderSite() {
     )
     .join("");
 
-  // Work: the two-line eyebrow heading (line 0 light, line 1 bold), the 2x2
-  // grid of project cards, and the portrait photo.
+  // work: heading
   document.querySelector("#work .work-head").innerHTML =
     `<span class="t-light">${esc(C.work.eyebrow[0])}</span><br />` +
     `<span class="t-bold">${esc(C.work.eyebrow[1])}</span>`;
-  // data-index lets the click handler know which project to open; the button
-  // role + tabindex make each card clickable by mouse and keyboard.
+  // work: project cards (data-index = which project opens on click)
   document.querySelector("#work .work-grid").innerHTML = C.work.projects
     .map(
       (p, i) =>
         `<article class="work-card" data-index="${i}" tabindex="0" role="button" aria-label="${esc(p.title)}">` +
-        `<span class="work-card-panel" style="background-image:${cssUrl(p.image)}"></span>` + // project image, revealed on hover
-        `<span class="work-card-frame"></span>` + // crop marks, shown on hover
-        `<span class="work-card-plus"></span>` + // small "+" shown at rest
+        `<span class="work-card-panel" style="background-image:${cssUrl(p.image)}"></span>` + // hover image
+        `<span class="work-card-frame"></span>` + // hover crop marks
+        `<span class="work-card-plus"></span>` + // rest "+" mark
         `<p class="work-card-title"><strong>${esc(p.title)}</strong>${esc(p.desc)}</p>` +
-        `<span class="work-card-line"></span>` + // divider under the title
+        `<span class="work-card-line"></span>` + // divider
         `</article>`
     )
     .join("");
   setBackground("#work .work-circles .pic", C.work.circlePhoto);
 
-  // About: greeting + name (typed out later by typeOut), two bio paragraphs,
-  // the résumé entries, and the portrait photo.
+  // about: greeting, name, bio, resume, photo
   document.querySelector("#about .about-hello").innerHTML = C.about.hello.map(esc).join("<br />");
   document.querySelector("#about .about-name").innerHTML = C.about.name.map(esc).join("<br />");
   document.querySelector("#about .about-bio-1").textContent = C.about.bio[0];
@@ -150,7 +126,7 @@ function renderSite() {
     .join("");
   setBackground("#about .about-circle-pic", C.about.circlePhoto);
 
-  // Contact: heading, the label/value pairs (two aligned columns), the photo.
+  // contact: heading, label/value columns, photo
   document.querySelector("#contact .contact-heading").textContent = C.contact.heading;
   document.querySelector("#contact .contact-details").innerHTML =
     `<div class="contact-labels">${C.contact.details.map((d) => `<p>${esc(d.label)}</p>`).join("")}</div>` +
@@ -159,11 +135,9 @@ function renderSite() {
 }
 
 
-/* ---- Page switching ---- */
+// page switching
 
-// Show one page and hide the rest (CSS does the crossfade via the .active
-// class). The first time a page opens we add .reveal so its intro animation
-// plays once; on later visits .reveal is removed so it won't replay.
+// show one page, hide the rest (.reveal plays the intro once per page)
 function showPage(id) {
   PAGES.forEach((p) => {
     const el = document.getElementById(p);
@@ -178,9 +152,9 @@ function showPage(id) {
     }
   });
 
-  scaleApp(); // make sure the incoming page is sized to the window
+  scaleApp();
 
-  // The About page has two extras that only run while it is open.
+  // about-only extras
   if (id === "about") {
     initResumeLoop();
     typeAboutIntro();
@@ -190,35 +164,34 @@ function showPage(id) {
 }
 
 
-/* ---- Scaling: fit the fixed stage to any window ---- */
+// scaling
 
-// Pick the largest scale that still fits the 1440 x 760 stage inside the
-// window, and hand it to CSS as the --scale variable (used by .stage etc.).
+// scale the fixed stage to fit the window (sets the --scale css variable)
 function scaleApp() {
   const scale = Math.min(window.innerWidth / BASE_W, window.innerHeight / BASE_H);
   document.getElementById("viewport").style.setProperty("--scale", scale);
 }
 
 
-/* ---- Navigation: hover-to-open (with a short delay) ---- */
+// nav hover
 
 let navHoverTimer = null;
 
-// Open the page once the mouse has rested on its link for NAV_HOVER_DELAY ms.
+// open the page after the hover delay
 function hoverNav(id) {
   clearTimeout(navHoverTimer);
   navHoverTimer = setTimeout(() => showPage(id), NAV_HOVER_DELAY);
 }
 
-// Mouse left the link before the delay was up: cancel the pending open.
+// cancel a pending hover-open
 function cancelNavHover() {
   clearTimeout(navHoverTimer);
 }
 
 
-/* ---- Keyboard support + wiring up clicks and hovers ---- */
+// wiring (clicks, hovers, keyboard)
 
-// Let Enter or Space activate a focused link, like a real button would.
+// open a page when its focused link gets Enter/Space
 function activateByKey(e) {
   if (e.key === "Enter" || e.key === " ") {
     e.preventDefault();
@@ -226,9 +199,7 @@ function activateByKey(e) {
   }
 }
 
-// Attach behaviour to everything carrying a data-page="..." attribute.
-// Nav links open on hover, click, or keyboard. The landing circles open on
-// click or keyboard only (no hover, so their labels can be read first).
+// connect nav links and landing circles to page switching
 function wireNavigation() {
   document.querySelectorAll(".nav a[data-page]").forEach((el) => {
     el.addEventListener("mouseenter", () => hoverNav(el.dataset.page));
@@ -243,24 +214,16 @@ function wireNavigation() {
 }
 
 
-/* ---- Work page: open a project's detail panel ---- */
+// project detail panel
 
-// Build the inner markup for one project's detail panel from its content.json
-// fields:
-//   title   — big heading at the top
-//   intro   — short paragraph under the title
-//   blocks  — image + text sections. A block WITH a heading becomes an
-//             alternating image/text row (left, then right, then left...).
-//             A block with an EMPTY heading becomes a full-width image with a
-//             centered caption.
-//   gallery — a labelled grid of images at the bottom (image + caption).
-// Missing fields are skipped, so a project with only a title still opens fine.
+// build the panel markup for one project
+// blocks with a heading = image/text row (alternating); empty heading = full-width image
 function projectDetailHTML(p) {
   let html = `<h2 class="po-title">${esc(p.title)}</h2>`;
   if (p.intro) html += `<p class="po-intro">${esc(p.intro)}</p>`;
 
   if (Array.isArray(p.blocks)) {
-    let rowCount = 0; // headed rows alternate sides (left, right, left, ...)
+    let rowCount = 0; // counts headed rows to alternate sides
     p.blocks.forEach((b) => {
       if (!b) return;
       const img = b.image
@@ -268,7 +231,7 @@ function projectDetailHTML(p) {
         : "";
 
       if (b.heading && b.heading.trim()) {
-        // Alternating image/text row, with a "+" mark in the corner.
+        // image/text row
         const rev = rowCount % 2 === 1 ? " po-row--rev" : "";
         rowCount++;
         html +=
@@ -281,7 +244,7 @@ function projectDetailHTML(p) {
           `</div>` +
           `</section>`;
       } else {
-        // Full-width feature image with a centered caption (empty heading).
+        // full-width image + caption
         html +=
           `<section class="po-feature">` +
           `<div class="po-feature-media">${img}</div>` +
@@ -291,12 +254,13 @@ function projectDetailHTML(p) {
     });
   }
 
+  // bottom image strip
   if (Array.isArray(p.gallery) && p.gallery.length) {
     html +=
       `<div class="po-strip">` +
       p.gallery
         .map((g) => {
-          // Accept either an object {image, caption} or a plain image string.
+          // item can be {image, caption} or a plain image string
           const src = typeof g === "string" ? g : g && g.image;
           const cap = typeof g === "string" ? "" : (g && g.caption) || "";
           if (!src) return "";
@@ -313,8 +277,7 @@ function projectDetailHTML(p) {
   return html;
 }
 
-// Fill and show the detail panel for the project at the given index, then size
-// the scaled stage to fit.
+// fill and open the panel for a project
 function openProject(i) {
   const p = SITE_CONTENT.work.projects[i];
   if (!p) return;
@@ -322,34 +285,28 @@ function openProject(i) {
   overlay.querySelector(".po-content").innerHTML = projectDetailHTML(p);
   overlay.classList.add("open");
   overlay.setAttribute("aria-hidden", "false");
-  scalePopup(); // size the design stage now that the panel is visible
-  overlay.querySelector(".po-scroll").scrollTop = 0; // start at the top each time
-  overlay.querySelector(".po-close").focus(); // move keyboard focus into the panel
+  scalePopup();
+  overlay.querySelector(".po-scroll").scrollTop = 0;
+  overlay.querySelector(".po-close").focus();
 }
 
-// Scale the fixed 1199px-wide design stage so it fits the panel's width, and
-// size its wrapper to the scaled height so the panel scrolls correctly. This is
-// the same fixed-stage-then-scale idea the rest of the site uses.
+// scale the panel's design stage to fit the screen
 function scalePopup() {
   const overlay = document.getElementById("project-overlay");
   if (!overlay.classList.contains("open")) return;
   const DESIGN_W = 1199;
-  // Size the panel relative to the screen (about 82% of the width), but never
-  // larger than the design's own size. CSS `zoom` on the stage scales its real
-  // layout, so the panel scrolls correctly with no height measuring needed.
-  const scale = Math.min(window.innerWidth * 0.82, DESIGN_W) / DESIGN_W; // <= 1
+  const scale = Math.min(window.innerWidth * 0.82, DESIGN_W) / DESIGN_W;
   overlay.style.setProperty("--po-scale", scale);
 }
 
-// Hide the detail panel.
+// close the panel
 function closeProject() {
   const overlay = document.getElementById("project-overlay");
   overlay.classList.remove("open");
   overlay.setAttribute("aria-hidden", "true");
 }
 
-// Connect the Work cards (open on click or Enter/Space) and the panel's close
-// controls (the X button, clicking the dark backdrop, or pressing Escape).
+// connect the cards (open) and the close controls (x, backdrop, Escape)
 function wireProjects() {
   document.querySelectorAll(".work-card[data-index]").forEach((el) => {
     el.addEventListener("click", () => openProject(Number(el.dataset.index)));
@@ -366,29 +323,25 @@ function wireProjects() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeProject();
   });
-  window.addEventListener("resize", scalePopup); // re-fit the stage on resize
+  window.addEventListener("resize", scalePopup);
 }
 
 
-/* ---- About page: typewriter for the greeting and name ---- */
+// about: typewriter
 
-// Start the two typed lines (skipped for visitors who prefer reduced motion).
-// Each typeOut call takes: the element, the start delay (ms), the time per
-// character (ms), and how long the caret lingers at the end (ms).
+// start typing the greeting and name (skipped if reduced motion)
 function typeAboutIntro() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   typeOut(document.querySelector("#about .about-hello"), 800, 42, 0);
   typeOut(document.querySelector("#about .about-name"), 1550, 36, 600);
 }
 
-// Reveal an element's text one character at a time with a blinking caret.
-// The text is first rebuilt as individual letter <span>s so the final layout
-// is reserved up front (nothing jumps around as letters appear).
+// reveal an element's text letter by letter with a caret
 function typeOut(el, startMs, charMs, lingerMs) {
-  if (!el || el.dataset.typed) return; // type each element only once
+  if (!el || el.dataset.typed) return; // run once per element
   el.dataset.typed = "1";
 
-  // Rebuild the text as one span per letter, keeping any line breaks.
+  // rebuild the text as one span per letter
   const lines = el.innerHTML.split(/<br\s*\/?>/i);
   el.innerHTML = "";
   const chars = [];
@@ -403,8 +356,7 @@ function typeOut(el, startMs, charMs, lingerMs) {
     }
   });
 
-  // After the start delay, switch the letters on one by one and drag the
-  // caret along. When finished, remove the caret after lingerMs.
+  // turn letters on one by one, then remove the caret
   setTimeout(() => {
     const caret = document.createElement("span");
     caret.className = "caret";
@@ -425,23 +377,20 @@ function typeOut(el, startMs, charMs, lingerMs) {
 }
 
 
-/* ---- About page: gentle résumé auto-scroll ---- */
+// about: resume auto-scroll
 
-let resumeRAF = null; // id of the running animation frame, so we can stop it
-let resumePaused = false; // true while the mouse is over the résumé
-let resumePos = 0; // the scroll position we are currently animating to
+let resumeRAF = null; // running animation frame
+let resumePaused = false; // true while hovered
+let resumePos = 0; // current scroll position
 
-// Start the slow looping scroll of the résumé. The list is duplicated once so
-// that as the first copy scrolls out of view the second copy is already in
-// view, making the wrap invisible. You can also scroll it with the mouse
-// wheel; it pauses while hovered. Skipped for reduced-motion visitors.
+// start the looping resume scroll (list is duplicated for a seamless loop)
 function initResumeLoop() {
   const viewport = document.querySelector("#about .timeline");
   const list = document.querySelector("#about .timeline-list");
   if (!viewport || !list) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  // Set up the duplicate copy and the hover-pause just once.
+  // duplicate the list + set up hover pause (once)
   if (!list.dataset.looped) {
     list.dataset.looped = "1";
     list.innerHTML += list.innerHTML;
@@ -449,20 +398,20 @@ function initResumeLoop() {
     viewport.addEventListener("mouseleave", () => (resumePaused = false));
   }
 
-  // (Re)start the animation loop from the current scroll position.
+  // animation loop
   resumePos = viewport.scrollTop;
   if (resumeRAF) cancelAnimationFrame(resumeRAF);
   let last = performance.now();
   const step = (now) => {
-    const dt = (now - last) / 1000; // seconds elapsed since the last frame
+    const dt = (now - last) / 1000; // seconds since last frame
     last = now;
-    const oneCopy = list.scrollHeight / 2; // height of a single (un-duplicated) copy
+    const oneCopy = list.scrollHeight / 2; // height of one copy
     if (resumePaused) {
-      // While paused, follow whatever the user scrolls with the wheel.
+      // follow manual wheel scrolling while paused
       resumePos = viewport.scrollTop;
     } else if (oneCopy > 0) {
       resumePos += RESUME_SPEED * dt;
-      if (resumePos >= oneCopy) resumePos -= oneCopy; // wrap back for a seamless loop
+      if (resumePos >= oneCopy) resumePos -= oneCopy; // wrap
       viewport.scrollTop = resumePos;
     }
     resumeRAF = requestAnimationFrame(step);
@@ -470,7 +419,7 @@ function initResumeLoop() {
   resumeRAF = requestAnimationFrame(step);
 }
 
-// Stop the résumé loop (called whenever you leave the About page).
+// stop the resume loop
 function stopResumeLoop() {
   if (resumeRAF) {
     cancelAnimationFrame(resumeRAF);
@@ -479,11 +428,9 @@ function stopResumeLoop() {
 }
 
 
-/* ---- Boot: load content, build the pages, show the landing page ---- */
+// boot
 
-// Fetch content.json and start everything. "no-store" means edits made in the
-// CMS show up without a hard refresh. If the file fails to load we leave the
-// page blank rather than show it half-built.
+// load content.json, then build + wire + show the landing page
 async function boot() {
   try {
     SITE_CONTENT = await fetch("content.json", { cache: "no-store" }).then((r) => r.json());
@@ -497,9 +444,7 @@ async function boot() {
   showPage("landing");
 }
 
-// Scale the fixed stage to the window right away and on every resize, so the
-// layout always fits the screen — even before content.json has loaded, or if a
-// later step ever fails. (showPage also calls scaleApp once content is in.)
+// scale the stage immediately and on resize (also runs before content loads)
 scaleApp();
 window.addEventListener("resize", scaleApp);
 
